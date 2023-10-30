@@ -20,7 +20,7 @@ import { FaBlog } from "react-icons/fa";
 import Image from "next/image";
 // import dynamic from "next/dynamic";
 import Pkg from "@/components/home/pkg";
-import { Apple, GooglePlay } from "@/components/shared/icons";
+import { AppStore, Android } from "@/components/shared/icons";
 import { useTranslation } from "@/i18n/client";
 import { latestRelease } from "@/request";
 import { allPosts } from "contentlayer/generated";
@@ -171,22 +171,22 @@ export default function Home({
           <div className="grid w-full grid-cols-1 gap-5 md:max-w-2xl md:grid-cols-2">
             <Pkg
               lng={params.lng}
-              disabled={loading || error || !macos.length}
-              assets={macos}
+              disabled={loading || error || !windows.length}
+              assets={windows}
             >
-              <Apple className="h-7 w-7" />
+              <Android className="h-7 w-7" />
               <p>
-                <span className="sm:inline-block">App Store</span>
+                <span className="sm:inline-block">Google Play</span>
               </p>
             </Pkg>
             <Pkg
               lng={params.lng}
-              disabled={loading || error || !windows.length}
-              assets={windows}
+              disabled={loading || error || !macos.length}
+              assets={macos}
             >
-              <GooglePlay className="h-7 w-7" />
+              <AppStore className="h-7 w-7" />
               <p>
-                <span className="sm:inline-block">Google Play</span>
+                <span className="sm:inline-block">App Store</span>
               </p>
             </Pkg>
             {/*<Pkg*/}
