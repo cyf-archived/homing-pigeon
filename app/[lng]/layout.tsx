@@ -25,9 +25,9 @@ export async function generateMetadata({
   params: { lng: string };
 }): Promise<Metadata | undefined> {
   return {
-    title: params.lng === "en" ? "Homing Pigeon" : "Homing Pigeon",
+    title: params.lng === "en" ? "Homing Pigeon" : "信鸽",
     description: `${
-      params.lng === "en" ? "Homing Pigeon" : "Homing Pigeon"
+      params.lng === "en" ? "Homing Pigeon" : "信鸽"
     } - 童话镇里一枝花, 人美歌甜陈一发.`,
     metadataBase: new URL("https://chenyifaer.com"),
     icons: {
