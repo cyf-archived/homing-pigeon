@@ -20,7 +20,7 @@ import { FaBlog } from "react-icons/fa";
 import Image from "next/image";
 // import dynamic from "next/dynamic";
 import Pkg from "@/components/home/pkg";
-import { AppStore, Android } from "@/components/shared/icons";
+import { AppStore, Android, GooglePlay } from "@/components/shared/icons";
 import { useTranslation } from "@/i18n/client";
 import { latestRelease } from "@/request";
 import { allPosts } from "contentlayer/generated";
@@ -30,25 +30,11 @@ import { Asset, Release } from "@/types/release";
 //   ssr: false,
 // });
 
-type SystemOS = "macos" | "windows" | "linux";
+type SystemOS = "ios" | "android";
 
 const platforms: Record<SystemOS, string[]> = {
-  macos: [
-    "aarch64.dmg",
-    "universal.dmg",
-    "x64.dmg",
-    "aarch64.app.tar.gz",
-    "universal.app.tar.gz",
-    "x64.app.tar.gz",
-  ],
-  windows: [
-    "arm64-setup.exe",
-    "x64-setup.exe",
-    "x64-setup.nsis.zip",
-    "x86-setup.exe",
-    "x86-setup.nsis.zip",
-  ],
-  linux: ["amd64.AppImage", "amd64.AppImage.tar.gz", "amd64.deb"],
+  ios: [".ipa"],
+  android: [".apk"],
 };
 
 export default function Home({
@@ -75,18 +61,17 @@ export default function Home({
     if (data) {
       return (
         data.assets?.filter(
-          ({ name }) => !(name?.includes("-debug") || name?.endsWith(".sig")),
+          ({ name }) => !(name?.includes("x86_64") || name?.endsWith(".sig")),
         ) || []
       );
     }
     return [];
   }, [data]);
 
-  const { macos, windows, linux } = useMemo(() => {
+  const { ios, android } = useMemo(() => {
     const packages: Record<SystemOS, Asset[]> = {
-      macos: [],
-      windows: [],
-      linux: [],
+      ios: [],
+      android: [],
     };
     Object.keys(platforms).forEach((key: string) => {
       const matcher = (name: string) =>
@@ -168,35 +153,43 @@ export default function Home({
       </div>
       <div className="mt-10 grid w-full max-w-screen-xl animate-fade-up xl:px-0">
         <div className="flex items-center justify-center">
-          <div className="grid w-full grid-cols-1 gap-5 md:max-w-2xl md:grid-cols-2">
+          <div className="grid w-full grid-cols-1 gap-5 md:max-w-3xl md:grid-cols-3">
             <Pkg
               lng={params.lng}
-              disabled={loading || error || !windows.length}
-              assets={windows}
+              disabled={loading || error || !android.length}
+              assets={android}
             >
               <Android className="h-7 w-7" />
               <p>
-                <span className="sm:inline-block">Google Play</span>
+                <span className="sm:inline-block">Android</span>
               </p>
             </Pkg>
-            <Pkg
-              lng={params.lng}
-              disabled={loading || error || !macos.length}
-              assets={macos}
+            <Link
+              className="flex items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800 dark:bg-black dark:text-white/80 max-md:mx-10"
+              href=""
+            >
+              <GooglePlay className="h-7 w-7" />
+              <p>
+                <span className="sm:inline-block">Google Play</span>
+              </p>
+            </Link>
+            <Link
+              className="flex items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800 dark:bg-black dark:text-white/80 max-md:mx-10"
+              href=""
             >
               <AppStore className="h-7 w-7" />
               <p>
                 <span className="sm:inline-block">App Store</span>
               </p>
-            </Pkg>
+            </Link>
             {/*<Pkg*/}
             {/*  lng={params.lng}*/}
-            {/*  disabled={loading || error || !linux.length}*/}
-            {/*  assets={linux}*/}
+            {/*  disabled={loading || error || !ios.length}*/}
+            {/*  assets={ios}*/}
             {/*>*/}
-            {/*  <Linux className="h-7 w-7" />*/}
+            {/*  <AppStore className="h-7 w-7" />*/}
             {/*  <p>*/}
-            {/*    <span className="sm:inline-block">Linux</span>*/}
+            {/*    <span className="sm:inline-block">App Store</span>*/}
             {/*  </p>*/}
             {/*</Pkg>*/}
           </div>
@@ -209,13 +202,13 @@ export default function Home({
         >
           <Balancer>
             {tc("latest")}:{" "}
-            <Link
-              className=" text-red-400"
-              href={`https://github.com/cyf/homing-pigeon/releases/tag/${data?.tag_name}`}
-              target="_blank"
+            <span
+              className="text-red-400"
+              // href={`https://github.com/cyf/homing-pigeon/releases/tag/${data?.tag_name}`}
+              // target="_blank"
             >
               {data?.tag_name}
-            </Link>
+            </span>
           </Balancer>
         </p>
       )}
