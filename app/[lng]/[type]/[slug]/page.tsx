@@ -62,7 +62,7 @@ export default function Legal({
           {/* Article content */}
           <div className="lg:flex lg:justify-between">
             {/* Sidebar */}
-            <PostNav />
+            <PostNav lng={params.lng} />
 
             {/* Main content */}
             <div className="flex-1">
