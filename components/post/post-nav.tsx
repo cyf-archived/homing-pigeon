@@ -1,8 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { LngProps } from "@/i18next-lng";
+import { useTranslation } from "@/i18n/client";
 
-export default function PostNav() {
+export default function PostNav(props: LngProps) {
+  const { t } = useTranslation(props.lng);
   const [targets, setTargets] = useState<HTMLElement[]>([]);
   const [links, setLinks] = useState<HTMLElement[]>([]);
 
@@ -26,13 +29,12 @@ export default function PostNav() {
       {links.length > 0 && (
         <div className="sticky top-28">
           <h4 className="mb-4 text-lg font-bold leading-snug tracking-tight dark:text-gray-200">
-            Table of contents
+            {t("table-of-contents")}
           </h4>
           <ul className="-my-1 font-medium">
             {links.map((link, linkIndex) => (
               <li key={linkIndex} className="py-1.5">
                 <a
-                  data-scrollspy-link
                   className="flex items-center hover:underline dark:text-gray-200"
                   href={`#${link.id}`}
                 >
