@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "VERCEL_GIT_COMMIT_REF: $VERCEL_GIT_COMMIT_REF"
+echo "NEXT_PUBLIC_ENV: $NEXT_PUBLIC_ENV"
 
-if [[ "$VERCEL_GIT_COMMIT_REF" == "main"  ]] ; then
+if [[ "$NEXT_PUBLIC_ENV" == "dev"  ]] ; then
   # Proceed with the build
   echo "✅ - Build can proceed"
   exit 1;
