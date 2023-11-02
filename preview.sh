@@ -2,7 +2,7 @@
 
 echo "NEXT_PUBLIC_ENV: $NEXT_PUBLIC_ENV"
 
-if [[ "$NEXT_PUBLIC_ENV" == "dev"  ]] ; then
+if [[ "$NEXT_PUBLIC_ENV" == "stg"  ]] ; then
   # Proceed with the build
   echo "✅ - Build can proceed"
   exit 1;
