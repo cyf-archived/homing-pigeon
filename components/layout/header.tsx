@@ -9,6 +9,8 @@ import ThemeDropdown from "./theme-dropdown";
 import { LngProps } from "@/i18next-lng";
 import { useTranslation } from "@/i18n/client";
 
+const badge = process.env.NEXT_PUBLIC_ENV;
+
 export default function Header(props: LngProps) {
   const { t } = useTranslation(props.lng, "header");
   const scrolled = useScroll(50);
@@ -40,6 +42,13 @@ export default function Header(props: LngProps) {
             className="mr-2 rounded-sm"
           ></Image>
           <p>{t("title")}</p>
+          {badge && (
+            <sup className="ml-0.5 mt-2">
+              <span className="rounded bg-rose-400 px-1 text-[10px] leading-snug">
+                {badge}
+              </span>
+            </sup>
+          )}
         </Link>
         <div
           className="w-18 hidden items-center justify-between max-md:absolute max-md:right-5 max-md:top-16 max-md:bg-white max-md:dark:bg-gray-900 md:order-1 md:flex md:w-auto"
