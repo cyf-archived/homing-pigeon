@@ -20,11 +20,26 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      - run: sed -i '' 's/NEXT_GIT_COMMIT_SHA/${{ github.sha }}/g' next.config.js
+      - name: Configure env
+        run: |
+          echo "VERCEL_GIT_COMMIT_SHA=$VERCEL_GIT_COMMIT_SHA" >> .env
+          echo "NEXT_PUBLIC_GOOGLE_ID=$NEXT_PUBLIC_GOOGLE_ID" >> .env
+          echo "NEXT_PUBLIC_GH_TOKEN=$NEXT_PUBLIC_GH_TOKEN" >> .env
+          echo "NEXT_PUBLIC_GH_REPO_OWNER=$NEXT_PUBLIC_GH_REPO_OWNER" >> .env
+          echo "NEXT_PUBLIC_GH_REPO=$NEXT_PUBLIC_GH_REPO" >> .env
+          echo "NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV" >> .env
+        env:
+          VERCEL_GIT_COMMIT_SHA: ${{ github.sha }}
+          NEXT_PUBLIC_GOOGLE_ID: ${{ secrets.NEXT_PUBLIC_GOOGLE_ID }}
+          NEXT_PUBLIC_GH_TOKEN: ${{ secrets.NEXT_PUBLIC_GH_TOKEN }}
+          NEXT_PUBLIC_GH_REPO_OWNER: ${{ secrets.NEXT_PUBLIC_GH_REPO_OWNER }}
+          NEXT_PUBLIC_GH_REPO: ${{ secrets.NEXT_PUBLIC_GH_REPO }}
+          NEXT_PUBLIC_ENV: prod
       - name: Install Vercel CLI
         run: pnpm add --global vercel@latest
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - run: mv .env .vercel/.env.production.local
       - name: Build Project Artifacts
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy Project Artifacts to Vercel

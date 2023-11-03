@@ -5,10 +5,6 @@ import { LngProps } from "@/i18next-lng";
 import { useTranslation } from "@/i18n/client";
 import * as process from "process";
 
-const showCommitSha =
-  process.env.VERCEL_GIT_COMMIT_SHA &&
-  process.env.VERCEL_GIT_COMMIT_SHA !== "NEXT_GIT_COMMIT_SHA";
-
 function Footer(props: LngProps) {
   const { t } = useTranslation(props.lng, "footer");
   const { t: th } = useTranslation(props.lng, "header");
@@ -50,7 +46,7 @@ function Footer(props: LngProps) {
           {th("title")}
         </Link>
         . {t("copyright")}&nbsp;
-        {showCommitSha && (
+        {process.env.VERCEL_GIT_COMMIT_SHA && (
           <p className="flex items-center justify-center">
             <a
               href={`https://github.com/cyf/homing-pigeon/commit/${process.env.VERCEL_GIT_COMMIT_SHA}`}

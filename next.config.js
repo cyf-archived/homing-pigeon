@@ -18,8 +18,7 @@ const nextConfig = {
     webpackBuildWorker: true,
   },
   env: {
-    VERCEL_GIT_COMMIT_SHA:
-      process.env.VERCEL_GIT_COMMIT_SHA || "NEXT_GIT_COMMIT_SHA",
+    VERCEL_GIT_COMMIT_SHA: process.env.VERCEL_GIT_COMMIT_SHA,
     NEXT_PUBLIC_GOOGLE_ID: process.env.NEXT_PUBLIC_GOOGLE_ID,
     NEXT_PUBLIC_GH_TOKEN: process.env.NEXT_PUBLIC_GH_TOKEN,
     NEXT_PUBLIC_GH_REPO_OWNER: process.env.NEXT_PUBLIC_GH_REPO_OWNER,
