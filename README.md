@@ -1,5 +1,11 @@
 # homing-pigeon
 
+For development: [https://dev.chenyifaer.com/homing-pigeon](https://dev.chenyifaer.com/homing-pigeon)
+
+For staging: [https://stg.chenyifaer.com/homing-pigeon](https://stg.chenyifaer.com/homing-pigeon)
+
+For production: [https://www.chenyifaer.com/homing-pigeon](https://www.chenyifaer.com/homing-pigeon)
+
 ## Setup
 
 Make sure to install the dependencies:
