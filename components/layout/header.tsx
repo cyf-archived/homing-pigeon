@@ -44,7 +44,7 @@ export default function Header(props: LngProps) {
           <p>{t("title")}</p>
           {badge && (
             <sup className="ml-0.5 mt-2">
-              <span className="rounded bg-rose-400 px-1 text-[10px] leading-snug">
+              <span className="rounded bg-rose-400 px-1 text-[10px] leading-snug text-white">
                 {badge}
               </span>
             </sup>

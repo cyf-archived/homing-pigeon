@@ -3,6 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { LngProps } from "@/i18next-lng";
 import { useTranslation } from "@/i18n/client";
+import * as process from "process";
+
+const showCommitSha =
+  process.env.VERCEL_GIT_COMMIT_SHA &&
+  process.env.VERCEL_GIT_COMMIT_SHA !== "NEXT_GIT_COMMIT_SHA";
 
 function Footer(props: LngProps) {
   const { t } = useTranslation(props.lng, "footer");
@@ -41,14 +46,11 @@ function Footer(props: LngProps) {
       </p>
       <span className="mt-2 flex flex-wrap items-center justify-center text-sm text-gray-500 dark:text-gray-400 sm:text-center">
         © {`2023${fullYear === 2023 ? "" : `-${fullYear}`}`}&nbsp;
-        <a
-          href="https://www.chenyifaer.com/homing-pigeon"
-          className="hover:underline"
-        >
+        <Link href={`/${props.lng}`} rel="noopener noreferrer">
           {th("title")}
-        </a>
+        </Link>
         . {t("copyright")}&nbsp;
-        {process.env.VERCEL_GIT_COMMIT_SHA && (
+        {showCommitSha && (
           <p className="flex items-center justify-center">
             <a
               href={`https://github.com/cyf/homing-pigeon/commit/${process.env.VERCEL_GIT_COMMIT_SHA}`}
@@ -60,13 +62,17 @@ function Footer(props: LngProps) {
             </a>
           </p>
         )}
-        &nbsp;
-        <Image
-          src="https://visitor-badge.laobi.icu/badge?page_id=homing-pigeon.chenyifaer.com"
-          width={60}
-          height={20}
-          alt="visitor badge"
-        />
+        {process.env.NEXT_PUBLIC_ENV === "prod" && (
+          <>
+            &nbsp;
+            <Image
+              src="https://visitor-badge.laobi.icu/badge?page_id=homing-pigeon.chenyifaer.com"
+              width={60}
+              height={20}
+              alt="visitor badge"
+            />
+          </>
+        )}
       </span>
     </div>
   );
