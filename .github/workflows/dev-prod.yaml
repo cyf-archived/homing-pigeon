@@ -4,8 +4,8 @@ env:
   VERCEL_PROJECT_ID: ${{ secrets.DEV_VERCEL_PROJECT_ID }}
 on:
   push:
-    tags:
-      - '[0-9]+.[0-9]+.[0-9]+\+[0-9]+-dev.[0-9]+'
+    branches:
+      - main
 jobs:
   production:
     runs-on: ubuntu-latest
@@ -20,6 +20,7 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 8
+      - run: sed -i '' 's/NEXT_GIT_COMMIT_SHA/${{ github.sha }}/g' next.config.js
       - name: Install Vercel CLI
         run: pnpm add --global vercel@latest
       - name: Pull Vercel Environment Information
