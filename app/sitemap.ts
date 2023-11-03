@@ -1,9 +1,13 @@
 import { MetadataRoute } from "next";
 import { allPosts } from "contentlayer/generated";
 
+const NEXT_PUBLIC_ENV = process.env.NEXT_PUBLIC_ENV;
+
 const domain =
   process.env.NODE_ENV === "production"
-    ? "https://chenyifaer.com/homing-pigeon"
+    ? `https://${
+        NEXT_PUBLIC_ENV === "prod" ? "www" : NEXT_PUBLIC_ENV
+      }.chenyifaer.com/homing-pigeon`
     : "http://localhost:3000/homing-pigeon";
 
 export default function sitemap(): MetadataRoute.Sitemap {
