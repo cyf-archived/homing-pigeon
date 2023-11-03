@@ -8,8 +8,8 @@ on:
       - main
 jobs:
   preview:
-    runs-on: ubuntu-latest
-    timeout-minutes: 3
+    runs-on: macos-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
       - name: Setup node
