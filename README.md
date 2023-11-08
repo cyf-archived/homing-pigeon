@@ -1,5 +1,7 @@
 # homing-pigeon
 
+[![CodeFactor](https://www.codefactor.io/repository/github/cyf/homing-pigeon/badge)](https://www.codefactor.io/repository/github/cyf/homing-pigeon)
+
 For development: [https://dev.chenyifaer.com/homing-pigeon](https://dev.chenyifaer.com/homing-pigeon)
 
 For staging: [https://stg.chenyifaer.com/homing-pigeon](https://stg.chenyifaer.com/homing-pigeon)
