@@ -2,7 +2,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Homing Pigeon";
+export const alt = "信鸽,Homing Pigeon";
 export const contentType = "image/png";
 
 export default async function OG() {
