@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { allPosts } from "contentlayer/generated";
+import { basePath } from "@/constants";
 
 const NEXT_PUBLIC_ENV = process.env.NEXT_PUBLIC_ENV;
 
@@ -7,8 +8,8 @@ const domain =
   process.env.NODE_ENV === "production"
     ? `https://${
         NEXT_PUBLIC_ENV === "prod" ? "www" : NEXT_PUBLIC_ENV
-      }.chenyifaer.com/homing-pigeon`
-    : "http://localhost:3000/homing-pigeon";
+      }.chenyifaer.com${basePath}`
+    : `http://localhost:3000${basePath}`;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const sitemaps = allPosts

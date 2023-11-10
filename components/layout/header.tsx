@@ -8,6 +8,7 @@ import LngDropdown from "./lng-dropdown";
 import ThemeDropdown from "./theme-dropdown";
 import { LngProps } from "@/i18next-lng";
 import { useTranslation } from "@/i18n/client";
+import { basePath } from "@/constants";
 
 const badge = process.env.NEXT_PUBLIC_ENV;
 
@@ -35,7 +36,7 @@ export default function Header(props: LngProps) {
           className="flex items-center font-display text-2xl"
         >
           <Image
-            src="/homing-pigeon/logo.png"
+            src={`${basePath}/logo.png`}
             alt="logo"
             width="30"
             height="30"

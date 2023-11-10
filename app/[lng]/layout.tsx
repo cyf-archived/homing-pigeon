@@ -10,10 +10,11 @@ import GoogleAnalytics from "@/components/shared/google-analytics";
 // import CookieBanner from "@/components/shared/cookie-banner";
 import ScrollToTop from "@/components/layout/scroll-to-top";
 import { languages } from "@/i18n/settings";
-import { sfPro, inter } from "./fonts";
-import Particles from "@/app/[lng]/particles";
 import Footer from "@/components/layout/footer";
-import { Providers } from "@/app/[lng]/providers";
+import { basePath } from "@/constants";
+import { sfPro, inter } from "./fonts";
+import Particles from "./particles";
+import { Providers } from "./providers";
 
 const Header = dynamic(() => import("@/components/layout/header"), {
   ssr: false,
@@ -31,7 +32,7 @@ export async function generateMetadata({
     } - 童话镇里一枝花, 人美歌甜陈一发.`,
     metadataBase: new URL("https://chenyifaer.com"),
     icons: {
-      icon: "/homing-pigeon/logo.png",
+      icon: `${basePath}/logo.png`,
     },
   };
 }
