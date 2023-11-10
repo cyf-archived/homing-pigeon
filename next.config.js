@@ -1,8 +1,11 @@
 const { withContentlayer } = require("next-contentlayer");
 
+const basePath =
+  process.env.NEXT_PUBLIC_VERCEL_ENV === "production" ? "/homing-pigeon" : "";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: "/homing-pigeon",
+  basePath,
   trailingSlash: true,
   reactStrictMode: true,
   swcMinify: true,
@@ -19,6 +22,7 @@ const nextConfig = {
   },
   env: {
     VERCEL_GIT_COMMIT_SHA: process.env.VERCEL_GIT_COMMIT_SHA,
+    NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV,
     NEXT_PUBLIC_GOOGLE_ID: process.env.NEXT_PUBLIC_GOOGLE_ID,
     NEXT_PUBLIC_GH_TOKEN: process.env.NEXT_PUBLIC_GH_TOKEN,
     NEXT_PUBLIC_GH_REPO_OWNER: process.env.NEXT_PUBLIC_GH_REPO_OWNER,
