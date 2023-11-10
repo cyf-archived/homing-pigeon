@@ -2,12 +2,6 @@
 
 [![CodeFactor](https://www.codefactor.io/repository/github/cyf/homing-pigeon/badge)](https://www.codefactor.io/repository/github/cyf/homing-pigeon)
 
-For development: [https://dev.chenyifaer.com/homing-pigeon](https://dev.chenyifaer.com/homing-pigeon)
-
-For staging: [https://stg.chenyifaer.com/homing-pigeon](https://stg.chenyifaer.com/homing-pigeon)
-
-For production: [https://www.chenyifaer.com/homing-pigeon](https://www.chenyifaer.com/homing-pigeon)
-
 ## Setup
 
 Make sure to install the dependencies:
@@ -25,7 +19,7 @@ yarn install
 
 ## Development Server
 
-Start the development server on `http://localhost:3000/homing-pigeon/`:
+Start the development server on `http://localhost:3000`:
 
 ```bash
 # npm
@@ -39,6 +33,12 @@ yarn dev
 ```
 
 ## Production
+
+For development: [https://dev.chenyifaer.com/homing-pigeon](https://dev.chenyifaer.com/homing-pigeon)
+
+For staging: [https://stg.chenyifaer.com/homing-pigeon](https://stg.chenyifaer.com/homing-pigeon)
+
+For production: [https://www.chenyifaer.com/homing-pigeon](https://www.chenyifaer.com/homing-pigeon)
 
 Build the application for production:
 
