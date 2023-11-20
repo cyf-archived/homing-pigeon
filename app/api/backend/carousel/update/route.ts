@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     const { image, order, href, start_date, end_date, update_by } =
       await request.json();
 
-    if (!id || !image || !order || !Number.isInteger(order) || !update_by) {
+    if (!id || !image || !order || isNaN(parseInt(order, 10)) || !update_by) {
       return NextResponse.json(
         {
           code: httpStatus.BAD_REQUEST,
@@ -26,12 +26,11 @@ export async function POST(request: Request) {
     const carousel = await prisma.carousel.update({
       data: {
         image,
-        order,
+        order: parseInt(order, 10),
         href,
         start_date,
         end_date,
         update_by,
-        update_date: new Date(),
       },
       where: {
         id,

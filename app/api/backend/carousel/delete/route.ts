@@ -24,7 +24,6 @@ export async function POST(request: Request) {
     const carousel = await prisma.carousel.update({
       data: {
         update_by,
-        update_date: new Date(),
         is_del: "YES",
       },
       where: {
