@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     if (
       !image ||
       !order ||
-      !Number.isInteger(order) ||
+      isNaN(parseInt(order, 10)) ||
       !create_by ||
       !update_by
     ) {
@@ -26,18 +26,15 @@ export async function POST(request: Request) {
       );
     }
 
-    const currentDate = new Date();
     const carousel = await prisma.carousel.create({
       data: {
         image,
-        order,
+        order: parseInt(order, 10),
         href,
         start_date,
         end_date,
         create_by,
-        create_date: currentDate,
         update_by,
-        update_date: currentDate,
       },
     });
     return NextResponse.json(
