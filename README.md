@@ -19,7 +19,7 @@ yarn install
 
 ## Development Server
 
-Start the development server on `http://localhost:3000`:
+Start the development server on [http://localhost:3000](http://localhost:3000):
 
 ```bash
 # npm
@@ -31,6 +31,23 @@ pnpm run dev
 # yarn
 yarn dev
 ```
+
+## Api
+
+1. [http://localhost:3000/api/backend/carousel/add](http://localhost:3000/api/backend/carousel/add)
+
+2. [http://localhost:3000/api/backend/carousel/delete](http://localhost:3000/api/backend/carousel/delete)
+
+3. [http://localhost:3000/api/backend/carousel/get](http://localhost:3000/api/backend/carousel/get)
+
+4. [http://localhost:3000/api/backend/carousel/list](http://localhost:3000/api/backend/carousel/list)
+
+5. [http://localhost:3000/api/backend/carousel/update](http://localhost:3000/api/backend/carousel/update)
+
+6. [http://localhost:3000/api/backend/upload](http://localhost:3000/api/backend/upload)
+
+7. [http://localhost:3000/api/releases/latest](http://localhost:3000/api/releases/latest)
+
 
 ## Production
 
