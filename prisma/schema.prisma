@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
+}
+
+model Carousel {
+  id    String  @id @default(cuid())
+  image String
+  order Int
+  href  String?
+
+  start_date DateTime?
+  end_date   DateTime?
+
+  create_by   String
+  create_date DateTime @default(now())
+  update_by   String
+  update_date DateTime @default(now())
+  is_del      IsDel    @default(NO)
+
+  @@map("carousels")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime? @map("email_verified")
+  image         String?
+
+  create_date DateTime @default(now())
+  update_date DateTime @default(now())
+  is_del      IsDel    @default(NO)
+
+  @@map("users")
+}
+
+enum IsDel {
+  YES
+  NO
+}

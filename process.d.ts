@@ -8,5 +8,8 @@ declare namespace NodeJS {
     NEXT_PUBLIC_GH_REPO: string;
     NEXT_PUBLIC_COOKIE_BANNER_ID: string;
     NEXT_PUBLIC_ENV: string;
+    POSTGRES_PRISMA_URL: string;
+    POSTGRES_URL_NON_POOLING: string;
+    BLOB_READ_WRITE_TOKEN: string;
   }
 }

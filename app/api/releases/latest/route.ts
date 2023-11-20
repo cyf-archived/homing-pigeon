@@ -1,4 +1,5 @@
 import { Octokit } from "@octokit/rest";
+import httpStatus from "http-status";
 
 const octokit = new Octokit({
   auth: process.env.NEXT_PUBLIC_GH_TOKEN,
@@ -16,13 +17,17 @@ export async function GET() {
     });
 
     return Response.json(
-      { code: 0, data: latestRelease.data },
-      { status: 200 },
+      { code: 0, data: latestRelease.data, timestamp: Date.now() },
+      { status: httpStatus.OK },
     );
   } catch (error: any) {
     return Response.json(
-      { code: -1, error: error.message || error.toString() },
-      { status: 500 },
+      {
+        code: httpStatus.INTERNAL_SERVER_ERROR,
+        error: error.message || error.toString(),
+        timestamp: Date.now(),
+      },
+      { status: httpStatus.INTERNAL_SERVER_ERROR },
     );
   }
 }
