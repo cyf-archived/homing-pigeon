@@ -1,6 +1,6 @@
 # homing-pigeon
 
-[![CodeFactor](https://www.codefactor.io/repository/github/cyf/homing-pigeon/badge)](https://www.codefactor.io/repository/github/cyf/homing-pigeon)
+[![CodeFactor](https://www.codefactor.io/repository/github/cyf/homing-pigeon-dev/badge)](https://www.codefactor.io/repository/github/cyf/homing-pigeon-dev)
 
 ## Setup
 
