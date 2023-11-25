@@ -16,7 +16,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           code: httpStatus.BAD_REQUEST,
-          error: "Bad request",
+          msg: "Bad request",
           timestamp: Date.now(),
         },
         { status: httpStatus.BAD_REQUEST },
@@ -53,7 +53,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         code: httpStatus.INTERNAL_SERVER_ERROR,
-        error: error.message || error.toString(),
+        msg: error.message || error.toString(),
         timestamp: Date.now(),
       },
       { status: httpStatus.INTERNAL_SERVER_ERROR },

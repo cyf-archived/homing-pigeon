@@ -93,7 +93,7 @@ export default function Home({
         if (res?.code === 0) {
           setData(res?.data || {});
         } else {
-          setError(res?.error);
+          setError(res?.msg);
         }
       })
       .catch((error) => {
