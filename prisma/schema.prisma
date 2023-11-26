@@ -12,33 +12,33 @@ datasource db {
 }
 
 model Carousel {
-  id    String  @id @default(cuid())
-  image String
-  order Int
-  href  String?
+  id    String  @id @default(cuid()) @map("id")
+  image String  @map("image")
+  order Int     @map("order")
+  href  String? @map("href")
 
-  start_date DateTime?
-  end_date   DateTime?
+  start_date DateTime? @map("start_date")
+  end_date   DateTime? @map("end_date")
 
-  create_by   String
-  create_date DateTime @default(now())
-  update_by   String
-  update_date DateTime @default(now())
-  is_del      IsDel    @default(NO)
+  create_by   String   @map("create_by")
+  create_date DateTime @default(now()) @map("create_date")
+  update_by   String   @map("update_by")
+  update_date DateTime @default(now()) @map("update_date")
+  is_del      IsDel    @default(NO) @map("is_del")
 
   @@map("carousels")
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
+  id            String    @id @default(cuid()) @map("id")
+  name          String?   @map("name")
+  email         String?   @unique @map("email")
   emailVerified DateTime? @map("email_verified")
-  image         String?
+  image         String?   @map("image")
 
-  create_date DateTime @default(now())
-  update_date DateTime @default(now())
-  is_del      IsDel    @default(NO)
+  create_date DateTime @default(now()) @map("create_date")
+  update_date DateTime @default(now()) @map("update_date")
+  is_del      IsDel    @default(NO) @map("is_del")
 
   @@map("users")
 }
