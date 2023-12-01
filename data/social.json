@@ -1,0 +1,182 @@
+[
+  {
+    "title": "YouTube",
+    "subtitles": [
+      {
+        "title": "搜\"陈一发儿\""
+      }
+    ],
+    "descriptions": [
+      {
+        "name": "一般周六唱歌｜聊天｜读邮件；周三打游戏～",
+        "links": [
+          {
+            "type": "link",
+            "href": "https://www.youtube.com/@chenyifaer"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Twitch",
+    "subtitles": [
+      {
+        "title": "搜\"thebs_chen\""
+      }
+    ],
+    "descriptions": [
+      {
+        "name": "一般随机时间看电影～",
+        "links": [
+          {
+            "type": "link",
+            "href": "https://www.twitch.tv/thebs_chen"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "投稿邮箱",
+    "subtitles": [
+      {
+        "title": "长期征稿中! 情感咨询、人生迷思、买房卖房、生理卫生、投资理财、小学以下算术...等问题均可投稿。排忧解惑，治病救人～～"
+      }
+    ],
+    "tips": [
+      {
+        "type": "text",
+        "text": "["
+      },
+      {
+        "type": "link",
+        "text": "查看说明",
+        "href": "https://dev.chenyifaer.com/homing-pigeon/zh/video/introduce/"
+      },
+      {
+        "type": "text",
+        "text": "（注意音量）",
+        "color": "0xFFFF5050"
+      },
+      {
+        "type": "text",
+        "text": "]"
+      }
+    ],
+    "descriptions": [
+      {
+        "links": [
+          {
+            "type": "link",
+            "href": "mailto://chenyifaer777@gmail.com"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "微博话题",
+    "subtitles": [
+      {
+        "title": "搜\"陈一发儿\""
+      }
+    ],
+    "descriptions": [
+      {
+        "name": "水友们的精神家园",
+        "links": [
+          {
+            "type": "link",
+            "href": "https://weibo.com/p/100808b68aba47f332d118ad655dcfa1029afc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "官方淘宝店",
+    "subtitles": [
+      {
+        "title": "搜\"喜瑞斯\""
+      },
+      {
+        "title": "（这次是真的上新了!）",
+        "color": "0xFFFF5050"
+      }
+    ],
+    "descriptions": [
+      {
+        "links": [
+          {
+            "type": "link",
+            "href": "https://chenyifaer.taobao.com"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Spotify",
+    "subtitles": [
+      {
+        "title": "搜\"陈一发儿\""
+      }
+    ],
+    "descriptions": [
+      {
+        "links": [
+          {
+            "type": "link",
+            "href": "https://open.spotify.com/artist/10xtjTRMlKZ7aFx6VBQlSj"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Instagram",
+    "subtitles": [
+      {
+        "title": "搜\"yifaer_chen\""
+      }
+    ],
+    "descriptions": [
+      {
+        "links": [
+          {
+            "type": "link",
+            "href": "https://www.instagram.com/yifaer_chen"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "开播提醒群",
+    "descriptions": [
+      {
+        "name": "TG（Telegram）开播通知群",
+        "links": [
+          {
+            "type": "link",
+            "href": "https://t.me/FaFa67373"
+          },
+          {
+            "type": "text",
+            "text": "FaFa67373"
+          }
+        ]
+      },
+      {
+        "name": "QQ开播通知群",
+        "links": [
+          {
+            "type": "text",
+            "text": "320522657"
+          }
+        ]
+      }
+    ]
+  }
+]

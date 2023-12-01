@@ -84,11 +84,11 @@ export async function GET(request: Request) {
         code: 0,
         data: {
           items: carousels,
+          page,
+          pageSize,
           pageInfo: {
             total,
             pages: Math.ceil(total / pageSize),
-            page,
-            pageSize,
           },
         },
         timestamp: Date.now(),
