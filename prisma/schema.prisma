@@ -16,6 +16,7 @@ model Carousel {
   image String  @map("image")
   order Int     @map("order")
   text  String? @map("text")
+  color String? @map("color")
   href  String? @map("href")
 
   start_date DateTime? @map("start_date")
