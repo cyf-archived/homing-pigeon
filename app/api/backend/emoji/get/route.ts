@@ -5,14 +5,11 @@ import prisma from "@/lib/prisma";
 // https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
 export const dynamic = "force-dynamic";
 
-export async function POST(request: Request) {
+export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
-    const { image, order, text, href, start_date, end_date, update_by } =
-      await request.json();
-
-    if (!id || !image || !order || isNaN(parseInt(order, 10)) || !update_by) {
+    if (!id) {
       return NextResponse.json(
         {
           code: httpStatus.BAD_REQUEST,
@@ -23,15 +20,15 @@ export async function POST(request: Request) {
       );
     }
 
-    const carousel = await prisma.carousel.update({
-      data: {
-        image,
-        order: parseInt(order, 10),
-        text,
-        href,
-        start_date,
-        end_date,
-        update_by,
+    const emoji = await prisma.emoji.findUnique({
+      select: {
+        id: true,
+        image: true,
+        text: true,
+        create_by: true,
+        create_date: true,
+        update_by: true,
+        update_date: true,
       },
       where: {
         id,
@@ -39,7 +36,7 @@ export async function POST(request: Request) {
       },
     });
 
-    if (!carousel) {
+    if (!emoji) {
       return NextResponse.json(
         { code: httpStatus.NOT_FOUND, msg: "Not Found", timestamp: Date.now() },
         { status: httpStatus.NOT_FOUND },
@@ -47,7 +44,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json(
-      { code: 0, data: carousel, timestamp: Date.now() },
+      { code: 0, data: emoji, timestamp: Date.now() },
       { status: httpStatus.OK },
     );
   } catch (error: any) {

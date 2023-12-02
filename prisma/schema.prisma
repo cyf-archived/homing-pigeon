@@ -30,6 +30,20 @@ model Carousel {
   @@map("carousels")
 }
 
+model Emoji {
+  id    String  @id @default(cuid()) @map("id")
+  image String  @map("image")
+  text  String? @map("text")
+
+  create_by   String   @map("create_by")
+  create_date DateTime @default(now()) @map("create_date")
+  update_by   String   @map("update_by")
+  update_date DateTime @default(now()) @map("update_date")
+  is_del      IsDel    @default(NO) @map("is_del")
+
+  @@map("emojis")
+}
+
 model User {
   id            String    @id @default(cuid()) @map("id")
   name          String?   @map("name")

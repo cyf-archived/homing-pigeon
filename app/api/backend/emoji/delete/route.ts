@@ -9,10 +9,8 @@ export async function POST(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
-    const { image, order, text, href, start_date, end_date, update_by } =
-      await request.json();
-
-    if (!id || !image || !order || isNaN(parseInt(order, 10)) || !update_by) {
+    const { update_by } = await request.json();
+    if (!id || !update_by) {
       return NextResponse.json(
         {
           code: httpStatus.BAD_REQUEST,
@@ -23,15 +21,10 @@ export async function POST(request: Request) {
       );
     }
 
-    const carousel = await prisma.carousel.update({
+    const carousel = await prisma.emoji.update({
       data: {
-        image,
-        order: parseInt(order, 10),
-        text,
-        href,
-        start_date,
-        end_date,
         update_by,
+        is_del: "YES",
       },
       where: {
         id,
@@ -41,7 +34,7 @@ export async function POST(request: Request) {
 
     if (!carousel) {
       return NextResponse.json(
-        { code: httpStatus.NOT_FOUND, msg: "Not Found", timestamp: Date.now() },
+        { code: httpStatus.NOT_FOUND, msg: "Not found", timestamp: Date.now() },
         { status: httpStatus.NOT_FOUND },
       );
     }
