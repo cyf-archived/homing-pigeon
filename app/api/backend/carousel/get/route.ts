@@ -26,6 +26,7 @@ export async function GET(request: Request) {
         image: true,
         order: true,
         text: true,
+        color: true,
         href: true,
         start_date: true,
         end_date: true,

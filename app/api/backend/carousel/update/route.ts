@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
-    const { image, order, text, href, start_date, end_date, update_by } =
+    const { image, order, text, color, href, start_date, end_date, update_by } =
       await request.json();
 
     if (!id || !image || !order || isNaN(parseInt(order, 10)) || !update_by) {
@@ -28,6 +28,7 @@ export async function POST(request: Request) {
         image,
         order: parseInt(order, 10),
         text,
+        color,
         href,
         start_date,
         end_date,
