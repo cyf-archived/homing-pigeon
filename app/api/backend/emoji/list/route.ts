@@ -26,56 +26,25 @@ export async function GET(request: Request) {
     const page = parseInt(pageParam, 10);
     const pageSize = parseInt(pageSizeParam, 10);
 
-    const currentDate = new Date();
-    const where: Prisma.CarouselWhereInput = {
-      OR: [
-        {
-          start_date: null,
-          end_date: null,
-        },
-        {
-          start_date: { not: null, gte: currentDate },
-          end_date: { not: null, lte: currentDate },
-        },
-        {
-          start_date: null,
-          end_date: { not: null, lte: currentDate },
-        },
-        {
-          start_date: { not: null, gte: currentDate },
-          end_date: null,
-        },
-      ],
-      AND: [
-        {
-          is_del: "NO",
-        },
-      ],
+    const where: Prisma.EmojiWhereInput = {
+      is_del: "NO",
     };
-    const [carousels, total] = await prisma.$transaction([
-      prisma.carousel.findMany({
+    const [emojis, total] = await prisma.$transaction([
+      prisma.emoji.findMany({
         skip: (page - 1) * pageSize,
         take: pageSize,
         select: {
           id: true,
           image: true,
-          order: true,
-          href: true,
-          start_date: true,
-          end_date: true,
+          text: true,
           create_by: true,
           create_date: true,
           update_by: true,
           update_date: true,
         },
         where,
-        orderBy: [
-          {
-            order: "desc",
-          },
-        ],
       }),
-      prisma.carousel.count({
+      prisma.emoji.count({
         where,
       }),
     ]);
@@ -83,7 +52,7 @@ export async function GET(request: Request) {
       {
         code: 0,
         data: {
-          items: carousels,
+          items: emojis,
           page,
           pageSize,
           pageInfo: {

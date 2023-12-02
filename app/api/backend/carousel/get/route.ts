@@ -42,7 +42,7 @@ export async function GET(request: Request) {
 
     if (!carousel) {
       return NextResponse.json(
-        { code: httpStatus.NOT_FOUND, timestamp: Date.now() },
+        { code: httpStatus.NOT_FOUND, msg: "Not Found", timestamp: Date.now() },
         { status: httpStatus.NOT_FOUND },
       );
     }
