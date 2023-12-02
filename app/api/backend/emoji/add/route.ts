@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
-    const { image, text, create_by, update_by } = await request.json();
+    const { image, text, color, create_by, update_by } = await request.json();
     if (!image || !create_by || !update_by) {
       return NextResponse.json(
         {
@@ -23,6 +23,7 @@ export async function POST(request: Request) {
       data: {
         image,
         text,
+        color,
         create_by,
         update_by,
       },

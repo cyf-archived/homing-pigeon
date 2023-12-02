@@ -35,6 +35,7 @@ model Emoji {
   id    String  @id @default(cuid()) @map("id")
   image String  @map("image")
   text  String? @map("text")
+  color String? @map("color")
 
   create_by   String   @map("create_by")
   create_date DateTime @default(now()) @map("create_date")

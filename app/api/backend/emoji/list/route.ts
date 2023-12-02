@@ -37,6 +37,7 @@ export async function GET(request: Request) {
           id: true,
           image: true,
           text: true,
+          color: true,
           create_by: true,
           create_date: true,
           update_by: true,

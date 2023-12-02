@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
-    const { image, text, update_by } = await request.json();
+    const { image, text, color, update_by } = await request.json();
 
     if (!id || !image || !update_by) {
       return NextResponse.json(
@@ -26,6 +26,7 @@ export async function POST(request: Request) {
       data: {
         image,
         text,
+        color,
         update_by,
       },
       where: {
