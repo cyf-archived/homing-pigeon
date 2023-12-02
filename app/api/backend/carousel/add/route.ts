@@ -7,8 +7,16 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
-    const { image, order, href, start_date, end_date, create_by, update_by } =
-      await request.json();
+    const {
+      image,
+      order,
+      text,
+      href,
+      start_date,
+      end_date,
+      create_by,
+      update_by,
+    } = await request.json();
     if (
       !image ||
       !order ||
@@ -30,6 +38,7 @@ export async function POST(request: Request) {
       data: {
         image,
         order: parseInt(order, 10),
+        text,
         href,
         start_date,
         end_date,
