@@ -6,26 +6,8 @@ import prisma from "@/lib/prisma";
 // https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
 export const dynamic = "force-dynamic";
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
-    const { searchParams } = new URL(request.url);
-    const pageParam = searchParams.get("page") || "1";
-    const pageSizeParam = searchParams.get("page_size") || "10";
-
-    if (isNaN(parseInt(pageParam, 10)) || isNaN(parseInt(pageSizeParam, 10))) {
-      return NextResponse.json(
-        {
-          code: httpStatus.BAD_REQUEST,
-          msg: "Bad request",
-          timestamp: Date.now(),
-        },
-        { status: httpStatus.BAD_REQUEST },
-      );
-    }
-
-    const page = parseInt(pageParam, 10);
-    const pageSize = parseInt(pageSizeParam, 10);
-
     const currentDate = new Date();
     const where: Prisma.CarouselWhereInput = {
       OR: [
@@ -52,45 +34,31 @@ export async function GET(request: Request) {
         },
       ],
     };
-    const [carousels, total] = await prisma.$transaction([
-      prisma.carousel.findMany({
-        skip: (page - 1) * pageSize,
-        take: pageSize,
-        select: {
-          id: true,
-          image: true,
-          order: true,
-          href: true,
-          start_date: true,
-          end_date: true,
-          create_by: true,
-          create_date: true,
-          update_by: true,
-          update_date: true,
+    const carousels = await prisma.carousel.findMany({
+      select: {
+        id: true,
+        image: true,
+        order: true,
+        text: true,
+        href: true,
+        start_date: true,
+        end_date: true,
+        create_by: true,
+        create_date: true,
+        update_by: true,
+        update_date: true,
+      },
+      where,
+      orderBy: [
+        {
+          order: "desc",
         },
-        where,
-        orderBy: [
-          {
-            order: "desc",
-          },
-        ],
-      }),
-      prisma.carousel.count({
-        where,
-      }),
-    ]);
+      ],
+    });
     return NextResponse.json(
       {
         code: 0,
-        data: {
-          items: carousels,
-          page,
-          pageSize,
-          pageInfo: {
-            total,
-            pages: Math.ceil(total / pageSize),
-          },
-        },
+        data: carousels,
         timestamp: Date.now(),
       },
       { status: httpStatus.OK },

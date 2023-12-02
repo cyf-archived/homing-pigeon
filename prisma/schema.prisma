@@ -15,6 +15,7 @@ model Carousel {
   id    String  @id @default(cuid()) @map("id")
   image String  @map("image")
   order Int     @map("order")
+  text  String? @map("text")
   href  String? @map("href")
 
   start_date DateTime? @map("start_date")
