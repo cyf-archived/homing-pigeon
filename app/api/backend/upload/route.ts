@@ -27,9 +27,17 @@ export async function POST(request: Request) {
     }
 
     const blob = await upload(file, filename);
+    const fileSize = file.size;
 
     return NextResponse.json(
-      { code: 0, data: blob, timestamp: Date.now() },
+      {
+        code: 0,
+        data: {
+          ...(blob || {}),
+          fileSize,
+        },
+        timestamp: Date.now(),
+      },
       { status: httpStatus.OK },
     );
   } catch (error: any) {
