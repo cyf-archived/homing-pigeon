@@ -1,6 +1,8 @@
 import httpStatus from "http-status";
 import { NextResponse } from "next/server";
 import { upload } from "@/lib/upload";
+import prisma from "@/lib/prisma";
+import { userId } from "@/constants";
 
 // https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
 export const dynamic = "force-dynamic";
@@ -28,6 +30,17 @@ export async function POST(request: Request) {
 
     const blob = await upload(file, filename);
     const fileSize = file.size;
+
+    await prisma.file.create({
+      data: {
+        url: blob.url,
+        name: blob.pathname,
+        type: blob.contentType,
+        size: fileSize,
+        create_by: userId,
+        update_by: userId,
+      },
+    });
 
     return NextResponse.json(
       {
