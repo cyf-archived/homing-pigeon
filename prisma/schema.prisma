@@ -46,6 +46,17 @@ model Emoji {
   @@map("emojis")
 }
 
+model Udid {
+  id   String @id @default(cuid()) @map("id")
+  text String @unique @map("text")
+
+  create_date DateTime @default(now()) @map("create_date")
+  update_date DateTime @default(now()) @map("update_date")
+  is_del      IsDel    @default(NO) @map("is_del")
+
+  @@map("udids")
+}
+
 model User {
   id            String    @id @default(cuid()) @map("id")
   name          String?   @map("name")
