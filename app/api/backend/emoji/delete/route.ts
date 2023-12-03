@@ -1,6 +1,7 @@
 import httpStatus from "http-status";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { userId } from "@/constants";
 
 // https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
 export const dynamic = "force-dynamic";
@@ -9,8 +10,7 @@ export async function POST(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
-    const { update_by } = await request.json();
-    if (!id || !update_by) {
+    if (!id) {
       return NextResponse.json(
         {
           code: httpStatus.BAD_REQUEST,
@@ -23,7 +23,8 @@ export async function POST(request: Request) {
 
     const carousel = await prisma.emoji.update({
       data: {
-        update_by,
+        update_by: userId,
+        update_date: new Date(),
         is_del: "YES",
       },
       where: {

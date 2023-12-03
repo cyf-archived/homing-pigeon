@@ -46,6 +46,22 @@ model Emoji {
   @@map("emojis")
 }
 
+model File {
+  id   String @id @default(cuid()) @map("id")
+  url  String @map("url")
+  name String @map("name")
+  type String @map("type")
+  size Int    @map("size")
+
+  create_by   String   @map("create_by")
+  create_date DateTime @default(now()) @map("create_date")
+  update_by   String   @map("update_by")
+  update_date DateTime @default(now()) @map("update_date")
+  is_del      IsDel    @default(NO) @map("is_del")
+
+  @@map("files")
+}
+
 model Udid {
   id   String @id @default(cuid()) @map("id")
   text String @unique @map("text")
