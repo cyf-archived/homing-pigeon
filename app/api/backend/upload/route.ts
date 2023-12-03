@@ -10,14 +10,11 @@ export const dynamic = "force-dynamic";
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
-    const file = formData.get("file");
-    let filename = formData.get("filename");
+    const files = formData
+      .getAll("files")
+      .filter((file) => typeof file !== "string");
 
-    if (
-      (filename && typeof filename !== "string") ||
-      !file ||
-      typeof file === "string"
-    ) {
+    if (!files.length) {
       return NextResponse.json(
         {
           code: httpStatus.BAD_REQUEST,
@@ -28,27 +25,35 @@ export async function POST(request: Request) {
       );
     }
 
-    const blob = await upload(file, filename);
-    const fileSize = file.size;
+    const uploadFile = async (file: FormDataEntryValue) => {
+      if (typeof file === "string") {
+        throw "File cannot be a string";
+      }
+      const blob = await upload(file);
+      const fileSize = file.size;
 
-    await prisma.file.create({
-      data: {
-        url: blob.url,
-        name: blob.pathname,
-        type: blob.contentType,
-        size: fileSize,
-        create_by: userId,
-        update_by: userId,
-      },
-    });
+      await prisma.file.create({
+        data: {
+          url: blob.url,
+          name: blob.pathname,
+          type: blob.contentType,
+          size: fileSize,
+          create_by: userId,
+          update_by: userId,
+        },
+      });
+      return {
+        ...(blob || {}),
+        fileSize,
+      };
+    };
+
+    const data = await Promise.all(files.map((file) => uploadFile(file)));
 
     return NextResponse.json(
       {
         code: 0,
-        data: {
-          ...(blob || {}),
-          fileSize,
-        },
+        data: data,
         timestamp: Date.now(),
       },
       { status: httpStatus.OK },
