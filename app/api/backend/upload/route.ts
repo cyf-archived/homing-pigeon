@@ -1,16 +1,21 @@
-import { put } from "@vercel/blob";
 import httpStatus from "http-status";
 import { NextResponse } from "next/server";
+import { upload } from "@/lib/upload";
 
 // https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
-    const { searchParams } = new URL(request.url);
-    const filename = searchParams.get("filename");
+    const formData = await request.formData();
+    const file = formData.get("file");
+    let filename = formData.get("filename");
 
-    if (!filename || !request.body) {
+    if (
+      (filename && typeof filename !== "string") ||
+      !file ||
+      typeof file === "string"
+    ) {
       return NextResponse.json(
         {
           code: httpStatus.BAD_REQUEST,
@@ -21,9 +26,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const blob = await put(filename, request.body, {
-      access: "public",
-    });
+    const blob = await upload(file, filename);
 
     return NextResponse.json(
       { code: 0, data: blob, timestamp: Date.now() },
