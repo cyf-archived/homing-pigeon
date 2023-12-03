@@ -1,6 +1,8 @@
-import { upload as uploadFile } from "@vercel/blob/client";
+import { put } from "@vercel/blob";
 import type { PutBlobResult } from "@vercel/blob";
 
 export const upload = (file: File): Promise<PutBlobResult> => {
-  return uploadFile(file.name, file);
+  return put(file.name, file, {
+    access: "public",
+  });
 };
