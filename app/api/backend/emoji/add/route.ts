@@ -2,14 +2,19 @@ import httpStatus from "http-status";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { userId } from "@/constants";
+import { schema } from "@/schema/emoji";
 
 // https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
-    const { image, text, color } = await request.json();
-    if (!image) {
+    const params = await request.json();
+    const {
+      error,
+      value: { image, type, size, text, color },
+    } = schema.validate(params);
+    if (error) {
       return NextResponse.json(
         {
           code: httpStatus.BAD_REQUEST,
@@ -23,6 +28,8 @@ export async function POST(request: Request) {
     const emoji = await prisma.emoji.create({
       data: {
         image,
+        type,
+        size,
         text,
         color,
         create_by: userId,

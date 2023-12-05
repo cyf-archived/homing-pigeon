@@ -24,6 +24,8 @@ export async function GET(request: Request) {
       select: {
         id: true,
         image: true,
+        type: true,
+        size: true,
         text: true,
         color: true,
         create_by: true,

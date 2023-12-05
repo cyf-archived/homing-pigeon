@@ -34,6 +34,8 @@ model Carousel {
 model Emoji {
   id    String  @id @default(cuid()) @map("id")
   image String  @map("image")
+  type  String? @map("type")
+  size  Int?    @map("size")
   text  String? @map("text")
   color String? @map("color")
 

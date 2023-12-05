@@ -2,14 +2,16 @@ import httpStatus from "http-status";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { userId } from "@/constants";
+import { schemaArray } from "@/schema/emoji";
 
 // https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
-    const requestData = await request.json();
-    if (!Array.isArray(requestData)) {
+    const params = await request.json();
+    const { error, value } = schemaArray.validate(params);
+    if (error) {
       return NextResponse.json(
         {
           code: httpStatus.BAD_REQUEST,
@@ -20,21 +22,11 @@ export async function POST(request: Request) {
       );
     }
 
-    const emptyItem = requestData.find((item) => !item.image);
-    if (emptyItem) {
-      return NextResponse.json(
-        {
-          code: httpStatus.BAD_REQUEST,
-          msg: "[Bad request]: image cannot be empty",
-          timestamp: Date.now(),
-        },
-        { status: httpStatus.BAD_REQUEST },
-      );
-    }
-
     const emojis = await prisma.emoji.createMany({
-      data: requestData.map(({ image, text, color }) => ({
+      data: value.map(({ image, type, size, text, color }) => ({
         image,
+        type,
+        size,
         text,
         color,
         create_by: userId,

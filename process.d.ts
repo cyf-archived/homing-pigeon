@@ -10,9 +10,5 @@ declare namespace NodeJS {
     NEXT_PUBLIC_ENV: string;
     POSTGRES_PRISMA_URL: string;
     POSTGRES_URL_NON_POOLING: string;
-    OSS_HOST: string;
-    OSS_ACCESS_ID: string;
-    OSS_ACCESS_SECRET: string;
-    OSS_BUCKET: string;
   }
 }
