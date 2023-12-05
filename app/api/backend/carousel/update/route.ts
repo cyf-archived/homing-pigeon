@@ -2,6 +2,7 @@ import httpStatus from "http-status";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { userId } from "@/constants";
+import { schema } from "@/schema/carousel";
 
 // https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
 export const dynamic = "force-dynamic";
@@ -10,9 +11,13 @@ export async function POST(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
-    const { image, order, text, color, href } = await request.json();
+    const params = await request.json();
+    const {
+      error,
+      value: { image, order, text, color, href, start_date, end_date },
+    } = schema.validate(params);
 
-    if (!id || !image || !order || isNaN(parseInt(order, 10))) {
+    if (!id || error) {
       return NextResponse.json(
         {
           code: httpStatus.BAD_REQUEST,
@@ -30,6 +35,8 @@ export async function POST(request: Request) {
         text,
         color,
         href,
+        start_date,
+        end_date,
         update_by: userId,
         update_date: new Date(),
       },

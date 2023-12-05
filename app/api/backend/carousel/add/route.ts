@@ -2,15 +2,19 @@ import httpStatus from "http-status";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { userId } from "@/constants";
+import { schema } from "@/schema/carousel";
 
 // https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
-    const { image, order, text, color, href, start_date, end_date } =
-      await request.json();
-    if (!image || !order || isNaN(parseInt(order, 10))) {
+    const params = await request.json();
+    const {
+      error,
+      value: { image, order, text, color, href, start_date, end_date },
+    } = schema.validate(params);
+    if (error) {
       return NextResponse.json(
         {
           code: httpStatus.BAD_REQUEST,
@@ -24,7 +28,7 @@ export async function POST(request: Request) {
     const carousel = await prisma.carousel.create({
       data: {
         image,
-        order: parseInt(order, 10),
+        order,
         text,
         color,
         href,

@@ -31,10 +31,6 @@ const nextConfig = {
     NEXT_PUBLIC_ENV: process.env.NEXT_PUBLIC_ENV,
     POSTGRES_PRISMA_URL: process.env.POSTGRES_PRISMA_URL,
     POSTGRES_URL_NON_POOLING: process.env.POSTGRES_URL_NON_POOLING,
-    OSS_HOST: process.env.OSS_HOST,
-    OSS_ACCESS_ID: process.env.OSS_ACCESS_ID,
-    OSS_ACCESS_SECRET: process.env.OSS_ACCESS_SECRET,
-    OSS_BUCKET: process.env.OSS_BUCKET,
   },
 };
 

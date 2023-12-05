@@ -28,6 +28,7 @@
       "@/lib/*": ["lib/*"],
       "@/styles/*": ["styles/*"],
       "@/theme/*": ["theme/*"],
+      "@/schema/*": ["schema/*"],
       "contentlayer/generated": ["./.contentlayer/generated"]
     }
   },
