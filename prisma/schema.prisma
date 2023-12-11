@@ -48,12 +48,46 @@ model Emoji {
   @@map("emojis")
 }
 
+model Feedback {
+  id          String @id @default(cuid()) @map("id")
+  title       String @map("title")
+  description String @map("description")
+
+  files File[]
+
+  create_by   String   @map("create_by")
+  create_date DateTime @default(now()) @map("create_date")
+  update_by   String   @map("update_by")
+  update_date DateTime @default(now()) @map("update_date")
+  is_del      IsDel    @default(NO) @map("is_del")
+
+  @@map("feedbacks")
+}
+
+model File {
+  id          String  @id @default(cuid()) @map("id")
+  feedback_id String  @map("feedback_id")
+  url         String  @map("url")
+  type        String? @map("type")
+  size        Int?    @map("size")
+  title       String? @map("title")
+
+  create_by   String   @map("create_by")
+  create_date DateTime @default(now()) @map("create_date")
+  update_by   String   @map("update_by")
+  update_date DateTime @default(now()) @map("update_date")
+  is_del      IsDel    @default(NO) @map("is_del")
+  Feedback    Feedback @relation(fields: [feedback_id], references: [id])
+
+  @@map("files")
+}
+
 model User {
-  id            String    @id @default(cuid()) @map("id")
-  name          String?   @map("name")
-  email         String?   @unique @map("email")
-  emailVerified DateTime? @map("email_verified")
-  image         String?   @map("image")
+  id             String    @id @default(cuid()) @map("id")
+  name           String?   @map("name")
+  email          String?   @unique @map("email")
+  email_verified DateTime? @map("email_verified")
+  image          String?   @map("image")
 
   create_date DateTime @default(now()) @map("create_date")
   update_date DateTime @default(now()) @map("update_date")
