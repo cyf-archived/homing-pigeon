@@ -14,7 +14,6 @@ export async function POST(request: Request) {
       error,
       value: { title, description, files = [] },
     } = schema.validate(params);
-    console.error(error);
     if (error) {
       return NextResponse.json(
         {
@@ -31,26 +30,28 @@ export async function POST(request: Request) {
         title,
         description,
         files: {
-          create: files.map(
-            ({
-              url,
-              type,
-              size,
-              title,
-            }: {
-              url: string;
-              type: string;
-              size: number;
-              title: string;
-            }) => ({
-              url,
-              type,
-              size,
-              title,
-              create_by: userId,
-              update_by: userId,
-            }),
-          ),
+          createMany: {
+            data: files.map(
+              ({
+                url,
+                type,
+                size,
+                title,
+              }: {
+                url: string;
+                type?: string;
+                size?: number;
+                title?: string;
+              }) => ({
+                url,
+                type,
+                size,
+                title,
+                create_by: userId,
+                update_by: userId,
+              }),
+            ),
+          },
         },
         create_by: userId,
         update_by: userId,

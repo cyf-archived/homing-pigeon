@@ -11,6 +11,7 @@ export async function POST(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
+    const del_file_ids = searchParams.getAll("del_file_ids");
     const params = await request.json();
     const {
       error,
@@ -32,19 +33,55 @@ export async function POST(request: Request) {
         title,
         description,
         files: {
-          updateMany: {
-            data: {
-              is_del: "YES",
-            },
-            where: {
-              id: {
-                notIn: files
-                  .filter((file: any) => !!file.id)
-                  .map((file: any) => file.id),
-              },
-              is_del: "NO",
-            },
-          },
+          updateMany: [
+            ...(del_file_ids.length
+              ? [
+                  {
+                    data: {
+                      update_by: userId,
+                      update_date: new Date(),
+                      is_del: "YES",
+                    },
+                    where: {
+                      id: {
+                        in: del_file_ids,
+                      },
+                      is_del: "NO",
+                    },
+                  },
+                ]
+              : []),
+            ...(files
+              .filter((file: any) => !!file.id)
+              .map(
+                ({
+                  id,
+                  url,
+                  type,
+                  size,
+                  title,
+                }: {
+                  id: string;
+                  url: string;
+                  type: string;
+                  size: number;
+                  title: string;
+                }) => ({
+                  data: {
+                    url,
+                    type,
+                    size,
+                    title,
+                    update_by: userId,
+                    update_date: new Date(),
+                  },
+                  where: {
+                    id,
+                    is_del: "NO",
+                  },
+                }),
+              ) || []),
+          ],
           createMany: {
             data: files
               .filter((file: any) => !file.id)

@@ -65,21 +65,111 @@ model Feedback {
 }
 
 model File {
-  id          String  @id @default(cuid()) @map("id")
-  feedback_id String  @map("feedback_id")
-  url         String  @map("url")
-  type        String? @map("type")
-  size        Int?    @map("size")
-  title       String? @map("title")
+  id    String  @id @default(cuid()) @map("id")
+  url   String  @map("url")
+  type  String? @map("type")
+  size  Int?    @map("size")
+  title String? @map("title")
 
   create_by   String   @map("create_by")
   create_date DateTime @default(now()) @map("create_date")
   update_by   String   @map("update_by")
   update_date DateTime @default(now()) @map("update_date")
   is_del      IsDel    @default(NO) @map("is_del")
-  Feedback    Feedback @relation(fields: [feedback_id], references: [id])
+
+  feedback_id String   @map("feedback_id")
+  feedback    Feedback @relation(fields: [feedback_id], references: [id])
 
   @@map("files")
+}
+
+model Social {
+  id    String @id @default(cuid()) @map("id")
+  title String @map("title")
+
+  subtitles    SubTitle[]
+  tips         Tip[]
+  descriptions Description[]
+
+  create_by   String   @map("create_by")
+  create_date DateTime @default(now()) @map("create_date")
+  update_by   String   @map("update_by")
+  update_date DateTime @default(now()) @map("update_date")
+  is_del      IsDel    @default(NO) @map("is_del")
+
+  @@map("socials")
+}
+
+model SubTitle {
+  id    String  @id @default(cuid()) @map("id")
+  title String  @map("title")
+  color String? @map("color")
+
+  create_by   String   @map("create_by")
+  create_date DateTime @default(now()) @map("create_date")
+  update_by   String   @map("update_by")
+  update_date DateTime @default(now()) @map("update_date")
+  is_del      IsDel    @default(NO) @map("is_del")
+
+  social_id String
+  social    Social? @relation(fields: [social_id], references: [id])
+
+  @@map("subtitles")
+}
+
+model Description {
+  id    String  @id @default(cuid()) @map("id")
+  name  String? @map("name")
+  links Link[]
+
+  create_by   String   @map("create_by")
+  create_date DateTime @default(now()) @map("create_date")
+  update_by   String   @map("update_by")
+  update_date DateTime @default(now()) @map("update_date")
+  is_del      IsDel    @default(NO) @map("is_del")
+
+  social_id String  @map("social_id")
+  social    Social? @relation(fields: [social_id], references: [id])
+
+  @@map("descriptions")
+}
+
+model Tip {
+  id    String   @id @default(cuid()) @map("id")
+  type  LinkType @default(link) @map("title")
+  text  String?  @map("text")
+  href  String?  @map("href")
+  color String?  @map("color")
+
+  create_by   String   @map("create_by")
+  create_date DateTime @default(now()) @map("create_date")
+  update_by   String   @map("update_by")
+  update_date DateTime @default(now()) @map("update_date")
+  is_del      IsDel    @default(NO) @map("is_del")
+
+  social_id String  @map("social_id")
+  social    Social? @relation(fields: [social_id], references: [id])
+
+  @@map("tips")
+}
+
+model Link {
+  id    String   @id @default(cuid()) @map("id")
+  type  LinkType @default(link) @map("title")
+  text  String?  @map("text")
+  href  String?  @map("href")
+  color String?  @map("color")
+
+  create_by   String   @map("create_by")
+  create_date DateTime @default(now()) @map("create_date")
+  update_by   String   @map("update_by")
+  update_date DateTime @default(now()) @map("update_date")
+  is_del      IsDel    @default(NO) @map("is_del")
+
+  description_id String       @map("description_id")
+  description    Description? @relation(fields: [description_id], references: [id])
+
+  @@map("links")
 }
 
 model User {
@@ -99,4 +189,9 @@ model User {
 enum IsDel {
   YES
   NO
+}
+
+enum LinkType {
+  link
+  text
 }
