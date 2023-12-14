@@ -1,11 +1,12 @@
 import httpStatus from "http-status";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { userId } from "@/constants";
 
 // https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
 export const dynamic = "force-dynamic";
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
@@ -20,32 +21,11 @@ export async function GET(request: Request) {
       );
     }
 
-    const feedback = await prisma.feedback.findUnique({
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        files: {
-          select: {
-            id: true,
-            feedback_id: true,
-            url: true,
-            type: true,
-            size: true,
-            title: true,
-            create_by: true,
-            create_date: true,
-            update_by: true,
-            update_date: true,
-          },
-          where: {
-            is_del: "NO",
-          },
-        },
-        create_by: true,
-        create_date: true,
-        update_by: true,
-        update_date: true,
+    const social = await prisma.social.update({
+      data: {
+        update_by: userId,
+        update_date: new Date(),
+        is_del: "YES",
       },
       where: {
         id,
@@ -53,15 +33,15 @@ export async function GET(request: Request) {
       },
     });
 
-    if (!feedback) {
+    if (!social) {
       return NextResponse.json(
-        { code: httpStatus.NOT_FOUND, msg: "Not Found", timestamp: Date.now() },
+        { code: httpStatus.NOT_FOUND, msg: "Not found", timestamp: Date.now() },
         { status: httpStatus.NOT_FOUND },
       );
     }
 
     return NextResponse.json(
-      { code: 0, data: feedback, timestamp: Date.now() },
+      { code: 0, data: social, timestamp: Date.now() },
       { status: httpStatus.OK },
     );
   } catch (error: any) {

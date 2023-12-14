@@ -45,6 +45,10 @@ export async function GET(request: Request) {
               type: true,
               size: true,
               title: true,
+              create_by: true,
+              create_date: true,
+              update_by: true,
+              update_date: true,
             },
             where: {
               is_del: "NO",
