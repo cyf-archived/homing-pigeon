@@ -12,7 +12,7 @@ const link = Joi.object({
   id: Joi.string(),
   type: Joi.string().allow("link", "text").default("link").required(),
   text: Joi.string(),
-  href: Joi.string().uri({ scheme: ["http", "https"] }),
+  href: Joi.string().uri({ scheme: ["http", "https", "mailto"] }),
   color: Joi.string().pattern(
     RegExp("^(#|0x)([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$"),
   ),
