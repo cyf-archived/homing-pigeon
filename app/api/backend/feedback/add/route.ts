@@ -30,28 +30,26 @@ export async function POST(request: Request) {
         title,
         description,
         files: {
-          createMany: {
-            data: files.map(
-              ({
-                url,
-                type,
-                size,
-                title,
-              }: {
-                url: string;
-                type?: string;
-                size?: number;
-                title?: string;
-              }) => ({
-                url,
-                type,
-                size,
-                title,
-                create_by: userId,
-                update_by: userId,
-              }),
-            ),
-          },
+          create: files.map(
+            ({
+              url,
+              type,
+              size,
+              title,
+            }: {
+              url: string;
+              type?: string;
+              size?: number;
+              title?: string;
+            }) => ({
+              url,
+              type,
+              size,
+              title,
+              create_by: userId,
+              update_by: userId,
+            }),
+          ),
         },
         create_by: userId,
         update_by: userId,

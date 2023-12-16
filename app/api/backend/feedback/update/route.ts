@@ -82,30 +82,28 @@ export async function POST(request: Request) {
                 }),
               ) || []),
           ],
-          createMany: {
-            data: files
-              .filter((file: any) => !file.id)
-              .map(
-                ({
-                  url,
-                  type,
-                  size,
-                  title,
-                }: {
-                  url: string;
-                  type: string;
-                  size: number;
-                  title: string;
-                }) => ({
-                  url,
-                  type,
-                  size,
-                  title,
-                  create_by: userId,
-                  update_by: userId,
-                }),
-              ),
-          },
+          create: files
+            .filter((file: any) => !file.id)
+            .map(
+              ({
+                url,
+                type,
+                size,
+                title,
+              }: {
+                url: string;
+                type: string;
+                size: number;
+                title: string;
+              }) => ({
+                url,
+                type,
+                size,
+                title,
+                create_by: userId,
+                update_by: userId,
+              }),
+            ),
         },
         update_by: userId,
         update_date: new Date(),
