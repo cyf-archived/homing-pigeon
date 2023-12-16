@@ -172,6 +172,23 @@ model Link {
   @@map("links")
 }
 
+model Config {
+  id    String  @id @default(cuid()) @map("id")
+  key   String  @map("key")
+  value String? @map("value")
+
+  start_date DateTime? @map("start_date")
+  end_date   DateTime? @map("end_date")
+
+  create_by   String   @map("create_by")
+  create_date DateTime @default(now()) @map("create_date")
+  update_by   String   @map("update_by")
+  update_date DateTime @default(now()) @map("update_date")
+  is_del      IsDel    @default(NO) @map("is_del")
+
+  @@map("configs")
+}
+
 model User {
   id             String    @id @default(cuid()) @map("id")
   name           String?   @map("name")
