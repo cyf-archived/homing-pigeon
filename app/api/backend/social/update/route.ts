@@ -78,16 +78,14 @@ export async function POST(request: Request) {
                 }),
               ) || []),
           ],
-          createMany: {
-            data: subtitles
-              .filter((subtitle: any) => !subtitle.id)
-              .map(({ title, color }: { title: string; color?: string }) => ({
-                title,
-                color,
-                create_by: userId,
-                update_by: userId,
-              })),
-          },
+          create: subtitles
+            .filter((subtitle: any) => !subtitle.id)
+            .map(({ title, color }: { title: string; color?: string }) => ({
+              title,
+              color,
+              create_by: userId,
+              update_by: userId,
+            })),
         },
         tips: {
           updateMany: [
@@ -139,30 +137,28 @@ export async function POST(request: Request) {
                 }),
               ) || []),
           ],
-          createMany: {
-            data: tips
-              .filter((tip: any) => !tip.id)
-              .map(
-                ({
-                  type,
-                  text,
-                  href,
-                  color,
-                }: {
-                  type: string;
-                  text?: string;
-                  href?: string;
-                  color?: string;
-                }) => ({
-                  type,
-                  text,
-                  href,
-                  color,
-                  create_by: userId,
-                  update_by: userId,
-                }),
-              ),
-          },
+          create: tips
+            .filter((tip: any) => !tip.id)
+            .map(
+              ({
+                type,
+                text,
+                href,
+                color,
+              }: {
+                type: string;
+                text?: string;
+                href?: string;
+                color?: string;
+              }) => ({
+                type,
+                text,
+                href,
+                color,
+                create_by: userId,
+                update_by: userId,
+              }),
+            ),
         },
         descriptions: {
           updateMany: [
@@ -288,69 +284,67 @@ export async function POST(request: Request) {
                 }),
               ) || []),
           ],
-          createMany: {
-            data: descriptions
-              .filter((description: any) => !description.id)
-              .map(
-                ({
-                  name,
-                  links,
-                }: {
-                  name?: string;
-                  links: Array<{
-                    type: string;
-                    text?: string;
-                    href?: string;
-                    color?: string;
-                  }>;
-                }) => ({
-                  name,
-                  links: {
-                    // updateMany: {
-                    //   data: {
-                    //     update_by: userId,
-                    //     update_date: new Date(),
-                    //     is_del: "YES",
-                    //   },
-                    //   where: {
-                    //     id: {
-                    //       notIn: links
-                    //         .filter((link: any) => !!link.id)
-                    //         .map((link: any) => link.id),
-                    //     },
-                    //     is_del: "NO",
-                    //   },
-                    // },
-                    createMany: {
-                      data: links
-                        .filter((link: any) => !link.id)
-                        .map(
-                          ({
-                            type,
-                            text,
-                            href,
-                            color,
-                          }: {
-                            type: string;
-                            text?: string;
-                            href?: string;
-                            color?: string;
-                          }) => ({
-                            type,
-                            text,
-                            href,
-                            color,
-                            create_by: userId,
-                            update_by: userId,
-                          }),
-                        ),
-                    },
+          create: descriptions
+            .filter((description: any) => !description.id)
+            .map(
+              ({
+                name,
+                links,
+              }: {
+                name?: string;
+                links: Array<{
+                  type: string;
+                  text?: string;
+                  href?: string;
+                  color?: string;
+                }>;
+              }) => ({
+                name,
+                links: {
+                  // updateMany: {
+                  //   data: {
+                  //     update_by: userId,
+                  //     update_date: new Date(),
+                  //     is_del: "YES",
+                  //   },
+                  //   where: {
+                  //     id: {
+                  //       notIn: links
+                  //         .filter((link: any) => !!link.id)
+                  //         .map((link: any) => link.id),
+                  //     },
+                  //     is_del: "NO",
+                  //   },
+                  // },
+                  createMany: {
+                    data: links
+                      .filter((link: any) => !link.id)
+                      .map(
+                        ({
+                          type,
+                          text,
+                          href,
+                          color,
+                        }: {
+                          type: string;
+                          text?: string;
+                          href?: string;
+                          color?: string;
+                        }) => ({
+                          type,
+                          text,
+                          href,
+                          color,
+                          create_by: userId,
+                          update_by: userId,
+                        }),
+                      ),
                   },
-                  create_by: userId,
-                  update_by: userId,
-                }),
-              ),
-          },
+                },
+                create_by: userId,
+                update_by: userId,
+              }),
+            ),
         },
         update_by: userId,
         update_date: new Date(),

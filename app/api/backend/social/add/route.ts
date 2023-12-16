@@ -29,86 +29,78 @@ export async function POST(request: Request) {
       data: {
         title,
         subtitles: {
-          createMany: {
-            data: subtitles.map(
-              ({ title, color }: { title: string; color?: string }) => ({
-                title,
-                color,
-                create_by: userId,
-                update_by: userId,
-              }),
-            ),
-          },
+          create: subtitles.map(
+            ({ title, color }: { title: string; color?: string }) => ({
+              title,
+              color,
+              create_by: userId,
+              update_by: userId,
+            }),
+          ),
         },
         tips: {
-          createMany: {
-            data: tips.map(
-              ({
-                type,
-                text,
-                href,
-                color,
-              }: {
+          create: tips.map(
+            ({
+              type,
+              text,
+              href,
+              color,
+            }: {
+              type: string;
+              text?: string;
+              href?: string;
+              color?: string;
+            }) => ({
+              type,
+              text,
+              href,
+              color,
+              create_by: userId,
+              update_by: userId,
+            }),
+          ),
+        },
+        descriptions: {
+          create: descriptions.map(
+            ({
+              name,
+              links,
+            }: {
+              name?: string;
+              links: Array<{
                 type: string;
                 text?: string;
                 href?: string;
                 color?: string;
-              }) => ({
-                type,
-                text,
-                href,
-                color,
-                create_by: userId,
-                update_by: userId,
-              }),
-            ),
-          },
-        },
-        descriptions: {
-          createMany: {
-            data: descriptions.map(
-              ({
-                name,
-                links,
-              }: {
-                name?: string;
-                links: Array<{
-                  type: string;
-                  text?: string;
-                  href?: string;
-                  color?: string;
-                }>;
-              }) => ({
-                name,
-                links: {
-                  createMany: {
-                    data: links.map(
-                      ({
-                        type,
-                        text,
-                        href,
-                        color,
-                      }: {
-                        type: string;
-                        text?: string;
-                        href?: string;
-                        color?: string;
-                      }) => ({
-                        type,
-                        text,
-                        href,
-                        color,
-                        create_by: userId,
-                        update_by: userId,
-                      }),
-                    ),
-                  },
-                },
-                create_by: userId,
-                update_by: userId,
-              }),
-            ),
-          },
+              }>;
+            }) => ({
+              name,
+              links: {
+                create: links.map(
+                  ({
+                    type,
+                    text,
+                    href,
+                    color,
+                  }: {
+                    type: string;
+                    text?: string;
+                    href?: string;
+                    color?: string;
+                  }) => ({
+                    type,
+                    text,
+                    href,
+                    color,
+                    create_by: userId,
+                    update_by: userId,
+                  }),
+                ),
+              },
+              create_by: userId,
+              update_by: userId,
+            }),
+          ),
         },
         create_by: userId,
         update_by: userId,
