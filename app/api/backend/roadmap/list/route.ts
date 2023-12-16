@@ -9,8 +9,22 @@ export const dynamic = "force-dynamic";
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const date = searchParams.get("date");
-    if (!date) {
+    const yearParam = searchParams.get("year");
+    let monthParam = searchParams.get("month");
+    if (!yearParam || !monthParam) {
+      return NextResponse.json(
+        {
+          code: httpStatus.BAD_REQUEST,
+          msg: "Bad request",
+          timestamp: Date.now(),
+        },
+        { status: httpStatus.BAD_REQUEST },
+      );
+    }
+
+    const year = parseInt(yearParam, 10);
+    const month = parseInt(monthParam, 10);
+    if (!Number.isInteger(year) || !Number.isInteger(month)) {
       return NextResponse.json(
         {
           code: httpStatus.BAD_REQUEST,
