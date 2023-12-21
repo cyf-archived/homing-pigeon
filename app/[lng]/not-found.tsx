@@ -12,10 +12,10 @@ export default function NotFound() {
         <p className="text-base font-semibold leading-8 dark:text-gray-300">
           404
         </p>
-        <h1 className="mt-4 text-3xl font-bold tracking-tight dark:text-gray-300 sm:text-5xl">
+        <h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-5xl dark:text-gray-300">
           Page not found
         </h1>
-        <p className="mt-4 text-base dark:text-gray-300  sm:mt-6">
+        <p className="mt-4 text-base sm:mt-6  dark:text-gray-300">
           Sorry, we couldn’t find the page you’re looking for.
         </p>
         <div className="mt-10 flex justify-center dark:text-gray-300">

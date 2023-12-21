@@ -39,7 +39,7 @@ export default function Pkg(
     >
       <button
         onClick={() => setOpenPopover(!openPopover)}
-        className="flex items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:enabled:border-gray-800 disabled:cursor-not-allowed dark:bg-black dark:text-white/80 max-md:mx-10"
+        className="flex items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:enabled:border-gray-800 disabled:cursor-not-allowed max-md:mx-10 dark:bg-black dark:text-white/80"
         disabled={props.disabled}
         rel="noopener noreferrer"
       >
