@@ -42,7 +42,7 @@ function Footer(props: LngProps) {
           {t("terms-of-use")}
         </Link>
       </p>
-      <span className="mt-2 flex flex-wrap items-center justify-center text-sm text-gray-500 dark:text-gray-400 sm:text-center">
+      <span className="mt-2 flex flex-wrap items-center justify-center text-sm text-gray-500 sm:text-center dark:text-gray-400">
         © {`2023${fullYear === 2023 ? "" : `-${fullYear}`}`}&nbsp;
         <Link href={`/${props.lng}`} rel="noopener noreferrer">
           {th("title")}
@@ -60,17 +60,13 @@ function Footer(props: LngProps) {
             </a>
           </p>
         )}
-        {process.env.NEXT_PUBLIC_ENV === "prod" && (
-          <>
-            &nbsp;
-            <Image
-              src="https://visitor-badge.laobi.icu/badge?page_id=homing-pigeon.chenyifaer.com"
-              width={60}
-              height={20}
-              alt="visitor badge"
-            />
-          </>
-        )}
+        &nbsp;
+        <Image
+          src="https://visitor-badge.laobi.icu/badge?page_id=homing-pigeon.chenyifaer.com"
+          width={60}
+          height={20}
+          alt="visitor badge"
+        />
       </span>
     </div>
   );
