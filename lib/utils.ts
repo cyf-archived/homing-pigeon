@@ -53,7 +53,7 @@ export function nFormatter(num: number, digits?: number) {
 }
 
 export function capitalize(str: string) {
-  if (!str || typeof str !== "string") return str;
+  if (!str) return str;
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
