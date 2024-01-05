@@ -19,7 +19,7 @@
     "crypto-js": "^4.2.0",
     "date-fns": "^3.1.0",
     "focus-trap-react": "^10.2.3",
-    "framer-motion": "^10.17.8",
+    "framer-motion": "^10.17.9",
     "http-status": "^1.7.3",
     "i18next": "^23.7.16",
     "i18next-browser-languagedetector": "^7.2.0",
