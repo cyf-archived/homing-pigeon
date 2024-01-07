@@ -12,26 +12,40 @@ const api = axios.create({
   withCredentials: true,
 });
 
-api.interceptors.request.use(async (config) => {
-  if (isServer) {
-    const { cookies } = await import("next/headers"),
-      token = cookies().get(cacheTokenKey)?.value;
+api.interceptors.request.use(
+  async (config) => {
+    if (isServer) {
+      const { cookies } = await import("next/headers"),
+        token = cookies().get(cacheTokenKey)?.value;
 
-    if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
+      if (token) {
+        config.headers["Authorization"] = `Bearer ${token}`;
+      }
+    } else {
+      const token = document.cookie.replace(
+        new RegExp(`(?:(?:^|.*;\\s*)${cacheTokenKey}\\s*=\\s*([^;]*).*$)|^.*$`),
+        "$1",
+      );
+
+      if (token) {
+        config.headers["Authorization"] = `Bearer ${token}`;
+      }
     }
-  } else {
-    const token = document.cookie.replace(
-      new RegExp(`(?:(?:^|.*;\\s*)${cacheTokenKey}\\s*=\\s*([^;]*).*$)|^.*$`),
-      "$1",
-    );
 
-    if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
+
+api.interceptors.response.use(
+  async (response) => {
+    if (response.status !== 200) {
+      // todo: add 401
+      throw response;
     }
-  }
-
-  return config;
-});
+    return response.data;
+  },
+  (error) => Promise.reject(error),
+);
 
 export default api;

@@ -28,7 +28,7 @@ export function middleware(req: NextRequest) {
   if (!lng) lng = acceptLanguage.get(req.headers.get("Accept-Language"));
   if (!lng) lng = fallbackLng;
 
-  // Redirect if lng in path is not supported\
+  // Redirect if lng in path is not supported
   const pathname = req.nextUrl.pathname;
 
   const protectedPathnameRegex = RegExp(
@@ -39,13 +39,17 @@ export function middleware(req: NextRequest) {
   );
   const isProtected = protectedPathnameRegex.test(pathname);
   const token = req.cookies.get(cacheTokenKey)?.value;
-  if (!token && isProtected) {
-    return NextResponse.redirect(
-      new URL(
-        `${getPath(lng)}${pathname.startsWith("/") ? "" : "/"}/login`,
-        req.url,
-      ),
-    );
+  if (isProtected) {
+    if (!token) {
+      return NextResponse.redirect(
+        new URL(
+          `${getPath(lng)}${pathname.startsWith("/") ? "" : "/"}/login`,
+          req.url,
+        ),
+      );
+    }
+
+    // valid token
   }
 
   if (
