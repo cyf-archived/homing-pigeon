@@ -42,7 +42,7 @@ function Footer(props: LngProps) {
           {t("terms-of-use")}
         </Link>
       </p>
-      <span className="mt-2 flex flex-wrap items-center justify-center text-sm text-gray-500 sm:text-center dark:text-gray-400">
+      <span className="mt-2 flex flex-wrap items-center justify-center text-sm text-gray-500 dark:text-gray-400 sm:text-center">
         © {`2023${fullYear === 2023 ? "" : `-${fullYear}`}`}&nbsp;
         <Link href={`/${props.lng}`} rel="noopener noreferrer">
           {th("title")}
