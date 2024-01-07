@@ -4,30 +4,31 @@ import Link from "next/link";
 import Popover from "@/components/shared/popover";
 // import { useTranslation } from "@/i18n/client";
 import { LngProps } from "@/i18next-lng";
-import { Asset } from "@/types/release";
+import { Package } from "@/types/release";
 
 export default function Pkg(
   props: LngProps & {
-    assets: Asset[];
+    packages: Package[];
     disabled: boolean;
     children: React.ReactNode;
   },
 ) {
-  // const { t } = useTranslation(props.lng, "header");
+  const { lng, packages, disabled, children } = props;
+  // const { t } = useTranslation(lng, "header");
   const [openPopover, setOpenPopover] = useState(false);
 
   return (
     <Popover
       content={
         <div className="w-full min-w-[14rem] rounded-md bg-white p-2 dark:bg-black">
-          {props.assets.map((asset) => {
+          {packages.map((pkg) => {
             return (
               <Link
-                key={asset.id}
-                href={asset.browser_download_url || ""}
+                key={pkg.etag}
+                href={pkg.url || ""}
                 className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100 dark:hover:bg-gray-700"
               >
-                <p className="text-sm">{asset.name}</p>
+                <p className="text-sm">{pkg.short_name}</p>
               </Link>
             );
           })}
@@ -39,11 +40,11 @@ export default function Pkg(
     >
       <button
         onClick={() => setOpenPopover(!openPopover)}
-        className="flex items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:enabled:border-gray-800 disabled:cursor-not-allowed max-md:mx-10 dark:bg-black dark:text-white/80"
-        disabled={props.disabled}
+        className="flex items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:enabled:border-gray-800 disabled:cursor-not-allowed dark:bg-black dark:text-white/80 max-md:mx-10"
+        disabled={disabled}
         rel="noopener noreferrer"
       >
-        {props.children}
+        {children}
       </button>
     </Popover>
   );
