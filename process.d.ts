@@ -10,5 +10,6 @@ declare namespace NodeJS {
     ALIYUN_OSS_ACCESS_KEY_SECRET: string;
     ALIYUN_OSS_BUCKET: string;
     ALIYUN_OSS_ENDPOINT: string;
+    API_BASE_URL: string;
   }
 }

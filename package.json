@@ -14,6 +14,7 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "accept-language": "^3.0.18",
     "ali-oss": "^6.19.0",
+    "axios": "^1.6.5",
     "classnames": "^2.5.1",
     "contentlayer": "^0.3.4",
     "crypto-js": "^4.2.0",

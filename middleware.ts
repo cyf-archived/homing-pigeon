@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import acceptLanguage from "accept-language";
 import { fallbackLng, languages } from "./i18n/settings";
-import { cacheLngKey, basePath } from "./constants";
+import { cacheLngKey, cacheTokenKey, basePath } from "./constants";
 
 acceptLanguage.languages(languages);
 
@@ -17,6 +17,8 @@ export const config = {
 const cookieName: string = cacheLngKey;
 const getPath = (lng: string) => `${basePath}/${lng}`;
 
+const protectedPages = ["/admin"];
+
 export function middleware(req: NextRequest) {
   let lng;
   if (req.cookies.has(cookieName)) {
@@ -28,6 +30,24 @@ export function middleware(req: NextRequest) {
 
   // Redirect if lng in path is not supported\
   const pathname = req.nextUrl.pathname;
+
+  const protectedPathnameRegex = RegExp(
+    `^(/(${languages.join("|")}))?(${protectedPages
+      .flatMap((p) => (p === "/" ? ["", "/"] : p))
+      .join("|")})/?$`,
+    "i",
+  );
+  const isProtected = protectedPathnameRegex.test(pathname);
+  const token = req.cookies.get(cacheTokenKey)?.value;
+  if (!token && isProtected) {
+    return NextResponse.redirect(
+      new URL(
+        `${getPath(lng)}${pathname.startsWith("/") ? "" : "/"}/login`,
+        req.url,
+      ),
+    );
+  }
+
   if (
     !languages.some((loc) => pathname.startsWith(`/${loc}`)) &&
     !pathname.startsWith("/_next")
