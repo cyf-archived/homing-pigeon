@@ -22,9 +22,9 @@ import Image from "next/image";
 import Pkg from "@/components/home/pkg";
 import { AppStore, Android, GooglePlay } from "@/components/shared/icons";
 import { useTranslation } from "@/i18n/client";
-import { latestRelease } from "@/request";
+import { latestTop10Release, getReleaseInfo } from "@/request";
 import { allPosts } from "contentlayer/generated";
-import { Asset, Release } from "@/types/release";
+import { Release, Package } from "@/types/release";
 import { basePath } from "@/constants";
 
 // const DynamicCard = dynamic(() => import("@/components/home/card"), {
@@ -35,7 +35,7 @@ type SystemOS = "ios" | "android";
 
 const platforms: Record<SystemOS, string[]> = {
   ios: [".ipa"],
-  android: [".apk"],
+  android: [".apk", ".aab"],
 };
 
 export default function Home({
@@ -48,7 +48,8 @@ export default function Home({
   const { t } = useTranslation(params.lng, "header");
   const { t: tc } = useTranslation(params.lng, "common");
   const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<Release>({});
+  const [releases, setReleases] = useState<Release[]>([]);
+  const [pkgs, setPkgs] = useState<Package[]>([]);
   const [error, setError] = useState<any>(null);
 
   const post = allPosts
@@ -58,19 +59,10 @@ export default function Home({
     })
     .at(0);
 
-  const assets = useMemo(() => {
-    if (data) {
-      return (
-        data.assets?.filter(
-          ({ name }) => !(name?.includes("x86_64") || name?.endsWith(".sig")),
-        ) || []
-      );
-    }
-    return [];
-  }, [data]);
+  const latestRelease = useMemo(() => releases[0], [releases]);
 
   const { ios, android } = useMemo(() => {
-    const packages: Record<SystemOS, Asset[]> = {
+    const packages: Record<SystemOS, Package[]> = {
       ios: [],
       android: [],
     };
@@ -80,26 +72,42 @@ export default function Home({
           name.endsWith(platform),
         );
       packages[key as SystemOS] =
-        assets.filter(({ name }) => name && matcher(name)) || [];
+        pkgs.filter(({ short_name }) => short_name && matcher(short_name)) ||
+        [];
     });
     return packages;
-  }, [assets]);
+  }, [pkgs]);
 
-  const loadData = () => {
-    setLoading(true);
-    latestRelease()
-      .then((res) => {
-        setLoading(false);
-        if (res?.code === 0) {
-          setData(res?.data || {});
-        } else {
-          setError(res?.msg);
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      const res = await latestTop10Release();
+      setLoading(false);
+      if (res?.code === 0) {
+        const data = res?.data || [];
+        setReleases(data);
+        if (data.length) {
+          const prefix = data[0]?.prefix;
+          if (!prefix) {
+            return;
+          }
+          const pkgRes = await getReleaseInfo(prefix);
+          if (pkgRes?.code === 0) {
+            setPkgs(pkgRes?.data || []);
+          } else {
+            console.error(pkgRes?.msg);
+            setError(pkgRes?.msg);
+          }
         }
-      })
-      .catch((error) => {
-        setLoading(false);
-        setError(error.message || error.toString());
-      });
+      } else {
+        console.error(res?.msg);
+        setError(res?.msg);
+      }
+    } catch (error: any) {
+      console.error(error);
+      setLoading(false);
+      setError(error.message || error.toString());
+    }
   };
 
   useEffect(() => {
@@ -129,7 +137,7 @@ export default function Home({
           />
         </div>
         <h1
-          className="animate-fade-up bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] text-black/80 opacity-0 drop-shadow-sm md:text-7xl md:leading-[5rem] dark:text-white/80"
+          className="animate-fade-up bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] text-black/80 opacity-0 drop-shadow-sm dark:text-white/80 md:text-7xl md:leading-[5rem]"
           style={{ animationDelay: "0.15s", animationFillMode: "forwards" }}
         >
           <Balancer>{t("title")}</Balancer>
@@ -158,7 +166,7 @@ export default function Home({
             <Pkg
               lng={params.lng}
               disabled={loading || error || !android.length}
-              assets={android}
+              packages={android}
             >
               <Android className="h-7 w-7" />
               <p>
@@ -166,7 +174,7 @@ export default function Home({
               </p>
             </Pkg>
             <Link
-              className="flex items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800 max-md:mx-10 dark:bg-black dark:text-white/80"
+              className="flex items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800 dark:bg-black dark:text-white/80 max-md:mx-10"
               href=""
             >
               <GooglePlay className="h-7 w-7" />
@@ -175,7 +183,7 @@ export default function Home({
               </p>
             </Link>
             <Link
-              className="flex items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800 max-md:mx-10 dark:bg-black dark:text-white/80"
+              className="flex items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800 dark:bg-black dark:text-white/80 max-md:mx-10"
               href=""
             >
               <AppStore className="h-7 w-7" />
@@ -196,7 +204,7 @@ export default function Home({
           </div>
         </div>
       </div>
-      {data?.tag_name && (
+      {latestRelease?.version && (
         <p
           className="mt-4 animate-fade-up text-center text-sm opacity-0"
           style={{ animationDelay: "0.25s", animationFillMode: "forwards" }}
@@ -208,7 +216,7 @@ export default function Home({
               // href={`https://github.com/cyf/homing-pigeon/releases/tag/${data?.tag_name}`}
               // target="_blank"
             >
-              {data?.tag_name}
+              {latestRelease?.version}
             </span>
           </Balancer>
         </p>
