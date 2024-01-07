@@ -3,19 +3,6 @@ import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import Balancer from "react-wrap-balancer";
 import { RoughNotation } from "react-rough-notation";
-import { FiMail } from "react-icons/fi";
-import { IoGameControllerOutline } from "react-icons/io5";
-import {
-  SiTaobao,
-  SiSpotify,
-  SiSinaweibo,
-  SiInstagram,
-  SiYoutube,
-  SiTwitch,
-  SiTwitter,
-  SiTelegram,
-} from "react-icons/si";
-import { BiTestTube } from "react-icons/bi";
 import { FaBlog } from "react-icons/fa";
 import Image from "next/image";
 // import dynamic from "next/dynamic";
@@ -162,7 +149,7 @@ export default function Home({
       </div>
       <div className="mt-10 grid w-full max-w-screen-xl animate-fade-up xl:px-0">
         <div className="flex items-center justify-center">
-          <div className="grid w-full grid-cols-1 gap-5 md:max-w-3xl md:grid-cols-3">
+          <div className="grid w-full grid-cols-1 gap-5 px-10 sm:grid-cols-2 sm:px-10 md:max-w-5xl md:grid-cols-4 lg:px-0">
             <Pkg
               lng={params.lng}
               disabled={loading || error || !android.length}
@@ -173,8 +160,18 @@ export default function Home({
                 <span className="sm:inline-block">Android</span>
               </p>
             </Pkg>
+            <Pkg
+              lng={params.lng}
+              disabled={loading || error || !ios.length}
+              packages={ios}
+            >
+              <AppStore className="h-7 w-7" />
+              <p>
+                <span className="sm:inline-block">App Store</span>
+              </p>
+            </Pkg>
             <Link
-              className="flex items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800 dark:bg-black dark:text-white/80 max-md:mx-10"
+              className="flex items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800 dark:bg-black dark:text-white/80 max-md:mx-0"
               href=""
             >
               <GooglePlay className="h-7 w-7" />
@@ -183,7 +180,7 @@ export default function Home({
               </p>
             </Link>
             <Link
-              className="flex items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800 dark:bg-black dark:text-white/80 max-md:mx-10"
+              className="flex items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800 dark:bg-black dark:text-white/80 max-md:mx-0"
               href=""
             >
               <AppStore className="h-7 w-7" />
@@ -191,16 +188,6 @@ export default function Home({
                 <span className="sm:inline-block">App Store</span>
               </p>
             </Link>
-            {/*<Pkg*/}
-            {/*  lng={params.lng}*/}
-            {/*  disabled={loading || error || !ios.length}*/}
-            {/*  assets={ios}*/}
-            {/*>*/}
-            {/*  <AppStore className="h-7 w-7" />*/}
-            {/*  <p>*/}
-            {/*    <span className="sm:inline-block">App Store</span>*/}
-            {/*  </p>*/}
-            {/*</Pkg>*/}
           </div>
         </div>
       </div>
@@ -211,129 +198,10 @@ export default function Home({
         >
           <Balancer>
             {tc("latest")}:{" "}
-            <span
-              className="text-red-400"
-              // href={`https://github.com/cyf/homing-pigeon/releases/tag/${data?.tag_name}`}
-              // target="_blank"
-            >
-              {latestRelease?.version}
-            </span>
+            <span className="text-red-400">{latestRelease?.version}</span>
           </Balancer>
         </p>
       )}
-      {/*<div className="my-10 grid w-full max-w-screen-xl animate-fade-up grid-cols-1 gap-5 px-5 sm:grid-cols-2 lg:grid-cols-3 xl:px-0">*/}
-      {/*  {features.map(({ title, description, demo, url }) => (*/}
-      {/*    <DynamicCard*/}
-      {/*      key={title}*/}
-      {/*      title={title}*/}
-      {/*      description={description}*/}
-      {/*      demo={demo}*/}
-      {/*      url={url}*/}
-      {/*    />*/}
-      {/*  ))}*/}
-      {/*</div>*/}
     </>
   );
 }
-
-const features = [
-  {
-    title: "Taobao",
-    description:
-      "Pre-built beautiful, a11y-first components, powered by [Tailwind CSS](https://tailwindcss.com/), [Radix UI](https://www.radix-ui.com/), and [Framer Motion](https://framer.com/motion)",
-    demo: (
-      <SiTaobao className="h-24 w-24 text-gray-600 transition-all dark:text-white/80" />
-    ),
-    url: "https://chenyifaer.taobao.com",
-  },
-  {
-    title: "Instagram",
-    description:
-      "Built on [Next.js](https://nextjs.org/) primitives like `@next/font` and `next/image` for stellar performance.",
-    demo: (
-      <SiInstagram className="h-24 w-24 text-gray-600 transition-all dark:text-white/80" />
-    ),
-    url: "https://instagram.com/yifaer_chen",
-  },
-  {
-    title: "YouTube",
-    description:
-      "Jumpstart your next project by deploying Precedent to [Vercel](https://vercel.com/) in one click.",
-    demo: (
-      <SiYoutube className="h-24 w-24 text-gray-600 transition-all dark:text-white/80" />
-    ),
-    url: "https://www.youtube.com/@chenyifaer",
-  },
-  {
-    title: "Twitch",
-    description:
-      "Jumpstart your next project by deploying Precedent to [Vercel](https://vercel.com/) in one click.",
-    demo: (
-      <SiTwitch className="h-24 w-24 text-gray-600 transition-all dark:text-white/80" />
-    ),
-    url: "https://www.twitch.tv/thebs_chen",
-  },
-  {
-    title: "Spotify",
-    description:
-      "Jumpstart your next project by deploying Precedent to [Vercel](https://vercel.com/) in one click.",
-    demo: (
-      <SiSpotify className="h-24 w-24 text-gray-600 transition-all dark:text-white/80" />
-    ),
-    url: "https://open.spotify.com/artist/10xtjTRMlKZ7aFx6VBQlSj",
-  },
-  {
-    title: "Weibo",
-    description:
-      "Jumpstart your next project by deploying Precedent to [Vercel](https://vercel.com/) in one click.",
-    demo: (
-      <SiSinaweibo className="h-24 w-24 text-gray-600 transition-all dark:text-white/80" />
-    ),
-    url: "https://weibo.com/u/7357828611",
-  },
-  {
-    title: "Twitter",
-    description:
-      "Jumpstart your next project by deploying Precedent to [Vercel](https://vercel.com/) in one click.",
-    demo: (
-      <SiTwitter className="h-24 w-24 text-gray-600 transition-all dark:text-white/80" />
-    ),
-    url: "https://twitter.com/yifaer_chen",
-  },
-  {
-    title: "Telegram",
-    description:
-      "Jumpstart your next project by deploying Precedent to [Vercel](https://vercel.com/) in one click.",
-    demo: (
-      <SiTelegram className="h-24 w-24 text-gray-600 transition-all dark:text-white/80" />
-    ),
-    url: "https://t.me/FaFa67373",
-  },
-  {
-    title: "Email",
-    description:
-      "Precedent comes with authentication and database via [Auth.js](https://authjs.dev/) + [Prisma](https://prisma.io/)",
-    demo: (
-      <FiMail className="h-24 w-24 text-gray-600 transition-all dark:text-white/80" />
-    ),
-    url: "mailto:chenyifaer777@gmail.com",
-  },
-  {
-    title: "FaFa Runner",
-    description:
-      "Precedent offers a collection of hooks, utilities, and `@vercel/og`",
-    demo: (
-      <IoGameControllerOutline className="h-24 w-24 text-gray-600 transition-all dark:text-white/80" />
-    ),
-    url: "https://chenyifaer.com/fafa-runner",
-  },
-  {
-    title: "CYF Insider",
-    description:
-      "Precedent offers a collection of hooks, utilities, and `@vercel/og`",
-    demo: (
-      <BiTestTube className="h-24 w-24 text-gray-600 transition-all dark:text-white/80" />
-    ),
-    url: "https://chenyifaer.com/join",
-  },
-];
