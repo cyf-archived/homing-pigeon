@@ -39,7 +39,7 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   async (response) => {
-    if (response.status !== 200) {
+    if (![200, 201].includes(response.status)) {
       // todo: add 401
       throw response;
     }

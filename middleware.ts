@@ -43,13 +43,15 @@ export function middleware(req: NextRequest) {
     if (!token) {
       return NextResponse.redirect(
         new URL(
-          `${getPath(lng)}${pathname.startsWith("/") ? "" : "/"}/login`,
+          `${getPath(lng)}${pathname.startsWith("/") ? "" : "/"}/login?r=${
+            req.url
+          }`,
           req.url,
         ),
       );
     }
 
-    // valid token
+    // todo: add valid token
   }
 
   if (
