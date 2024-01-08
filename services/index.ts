@@ -1,5 +1,2 @@
-import axios from "@/request/axios";
-
-export const fetchUser = async () => {
-  return axios.get("/api/backend/user/hello");
-};
+export * as authService from "./auth";
+export * as userService from "./user";
