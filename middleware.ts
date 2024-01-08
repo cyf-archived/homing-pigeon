@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import acceptLanguage from "accept-language";
 import { fallbackLng, languages } from "./i18n/settings";
-import { cacheLngKey, cacheTokenKey, basePath } from "./constants";
+import { cacheLngKey, cacheTokenKey, host, basePath } from "./constants";
 
 acceptLanguage.languages(languages);
 
@@ -43,9 +43,9 @@ export function middleware(req: NextRequest) {
     if (!token) {
       return NextResponse.redirect(
         new URL(
-          `${getPath(lng)}${pathname.startsWith("/") ? "" : "/"}/login?r=${
-            req.url
-          }`,
+          `${getPath(lng)}/login?r=${host}${basePath}${
+            pathname.startsWith("/") ? "" : "/"
+          }${pathname}`,
           req.url,
         ),
       );
