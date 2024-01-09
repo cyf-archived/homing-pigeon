@@ -9,7 +9,13 @@ import { Github, Google, LoadingDots } from "@/components/shared/icons";
 import { basePath, cacheTokenKey } from "@/constants";
 import { authService } from "@/services";
 
-export default function Login() {
+export default function Login({
+  params,
+}: {
+  params: {
+    lng: string;
+  };
+}) {
   const router = useRouter();
   const search = useSearchParams();
   const redirectUrl = search.get("r");
@@ -215,11 +221,17 @@ export default function Login() {
           />
           <p className="text-sm text-gray-500">
             I have carefully read and agreed to{" "}
-            <Link className="text-blue-500" href="/legal/privacy">
+            <Link
+              className="text-blue-500"
+              href={`/${params.lng}/legal/privacy`}
+            >
               Privacy Policy
             </Link>{" "}
             and{" "}
-            <Link className="text-blue-500" href="/legal/terms-of-use">
+            <Link
+              className="text-blue-500"
+              href={`/${params.lng}/legal/terms-of-use`}
+            >
               Terms and Conditions
             </Link>
           </p>
