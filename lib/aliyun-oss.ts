@@ -12,7 +12,7 @@ const client =
     accessKeySecret: process.env.ALIYUN_OSS_ACCESS_KEY_SECRET, // 确保已设置环境变量OSS_ACCESS_KEY_SECRET。
     bucket: process.env.ALIYUN_OSS_BUCKET, // 示例：'my-bucket-name'，填写存储空间名称。
     cname: true,
-    secure: false,
+    secure: true,
     endpoint: process.env.ALIYUN_OSS_ENDPOINT,
   });
 
