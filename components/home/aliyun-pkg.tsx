@@ -2,11 +2,10 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Popover from "@/components/shared/popover";
-// import { useTranslation } from "@/i18n/client";
 import { LngProps } from "@/i18next-lng";
-import { Package } from "@/types/release";
+import { Package } from "@/types/aliyun-oss";
 
-export default function Pkg(
+export default function AliyunPkg(
   props: LngProps & {
     packages: Package[];
     disabled: boolean;
@@ -14,7 +13,6 @@ export default function Pkg(
   },
 ) {
   const { packages, disabled, children } = props;
-  // const { t } = useTranslation(lng, "header");
   const [openPopover, setOpenPopover] = useState(false);
 
   return (

@@ -4,6 +4,9 @@ declare namespace NodeJS {
     NEXT_PUBLIC_VERCEL_ENV: string;
     NEXT_PUBLIC_GOOGLE_ID: string;
     NEXT_PUBLIC_COOKIE_BANNER_ID: string;
+    NEXT_PUBLIC_GH_TOKEN: string;
+    NEXT_PUBLIC_GH_REPO_OWNER: string;
+    NEXT_PUBLIC_GH_REPO: string;
     DISTRIBUTION_ENV: string;
     ALIYUN_OSS_REGION: string;
     ALIYUN_OSS_ACCESS_KEY_ID: string;
