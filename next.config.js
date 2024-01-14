@@ -35,6 +35,7 @@ const nextConfig = {
     ALIYUN_OSS_BUCKET: process.env.ALIYUN_OSS_BUCKET,
     ALIYUN_OSS_ENDPOINT: process.env.ALIYUN_OSS_ENDPOINT,
     API_BASE_URL: process.env.API_BASE_URL,
+    REQUEST_SIGN_KEY: process.env.REQUEST_SIGN_KEY,
   },
 };
 
