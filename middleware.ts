@@ -39,6 +39,7 @@ export function middleware(req: NextRequest) {
   );
   const isProtected = protectedPathnameRegex.test(pathname);
   const token = req.cookies.get(cacheTokenKey)?.value;
+  console.log("isProtected", isProtected, token);
   if (isProtected) {
     if (!token) {
       return NextResponse.redirect(
