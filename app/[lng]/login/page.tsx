@@ -70,7 +70,7 @@ export default function Login({
         console.log(redirectUrl);
         if (res?.code === 0) {
           Cookies.set(cacheTokenKey, res?.data?.access_token);
-          redirectUrl && router.replace(redirectUrl);
+          redirectUrl && window.location.replace(redirectUrl);
         }
       })
       .catch((error: any) => {
