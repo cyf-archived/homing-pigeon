@@ -67,7 +67,7 @@ export default function Login({
       })
       .then((res: any) => {
         setLoading(false);
-        console.log(res);
+        console.log(redirectUrl);
         if (res?.code === 0) {
           Cookies.set(cacheTokenKey, res?.data?.access_token);
           redirectUrl && router.push(redirectUrl);
