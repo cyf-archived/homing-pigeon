@@ -1,26 +1,16 @@
 import CryptoJS from "crypto-js";
 import { mapValues } from "lodash";
 
-const ENCRYPT_SALT = process.env.ENCRYPT_SALT;
 const ENCRYPT_KEY = process.env.ENCRYPT_KEY;
 const ENCRYPT_IV = process.env.ENCRYPT_IV;
 
-const salt = CryptoJS.enc.Utf8.parse(ENCRYPT_SALT);
-const pass = CryptoJS.enc.Utf8.parse(ENCRYPT_KEY);
+const key = CryptoJS.enc.Utf8.parse(ENCRYPT_KEY);
 const iv = CryptoJS.enc.Utf8.parse(ENCRYPT_IV);
 
 const _encryptDefUrls = ["/api/backend/auth/login"];
-
 const _encryptKeys = ["password", "newPassword", "oldPassword"];
 
-const keySize = 256;
-const iterations = 100;
 export const encrypt = (text: string) => {
-  const key = CryptoJS.PBKDF2(pass, salt, {
-    keySize: keySize / 32,
-    iterations: iterations,
-  });
-
   const encrypted = CryptoJS.AES.encrypt(text, key, {
     iv: iv,
     padding: CryptoJS.pad.Pkcs7,
@@ -34,11 +24,6 @@ export const encrypt = (text: string) => {
 };
 
 export const decrypt = (encrypted: string): string => {
-  const key = CryptoJS.PBKDF2(pass, salt, {
-    keySize: keySize / 32,
-    iterations: iterations,
-  });
-
   const decrypted = CryptoJS.AES.decrypt(encrypted, key, {
     iv: iv,
     padding: CryptoJS.pad.Pkcs7,
