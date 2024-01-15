@@ -1,10 +1,9 @@
 import axios from "axios";
-import sortKeysRecursive from "sort-keys-recursive";
-import queryString from "query-string";
-import CryptoJS from "crypto-js";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidV4 } from "uuid";
+import { isPlainObject, isEmpty } from "lodash";
 import { fallbackLng } from "@/i18n/settings";
 import { cacheTokenKey, cacheLngKey } from "@/constants";
+import { encryptSensitiveInfo, sign } from "@/utils";
 
 const baseURL = process.env.API_BASE_URL,
   isServer = typeof window === "undefined";
@@ -21,14 +20,29 @@ api.interceptors.request.use(
   async (config) => {
     config.params = config.params || {};
     config.params["timestamp"] = Date.now();
-    config.params["nonce"] = uuidv4();
-    const queryStr = queryString.stringify(sortKeysRecursive(config.params));
-    const utf8Str = CryptoJS.enc.Utf8.parse(
-      queryStr + process.env.REQUEST_SIGN_KEY,
-    );
-    config.headers["x-sign"] = CryptoJS.enc.Hex.stringify(
-      CryptoJS.MD5(utf8Str),
-    );
+    config.params["nonce"] = uuidV4();
+
+    if (config.method?.toUpperCase() === "GET") {
+      config.params = {
+        ...config.params,
+        ...encryptSensitiveInfo(config.url || "", config.params),
+      };
+    }
+
+    const data = config.data;
+    if (
+      config.method?.toUpperCase() === "POST" &&
+      isPlainObject(data) &&
+      !isEmpty(data)
+    ) {
+      config.data = {
+        ...config.data,
+        ...encryptSensitiveInfo(config.url || "", config.data),
+      };
+    }
+
+    config.headers = config.headers || {};
+    config.headers["x-sign"] = sign(config.params);
     config.headers["x-channel"] = "WEB";
 
     if (isServer) {
