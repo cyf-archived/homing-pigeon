@@ -1,10 +1,11 @@
 import axios from "axios";
 import { v4 as uuidV4 } from "uuid";
 import { isPlainObject, isEmpty } from "lodash";
+import Cookies from "js-cookie";
 import { fallbackLng } from "@/i18n/settings";
 import { cacheTokenKey, cacheLngKey } from "@/constants";
 import { encryptSensitiveInfo, sign } from "@/utils";
-import { version } from "../package.json";
+import pkgInfo from "../package.json";
 
 const baseURL = process.env.API_BASE_URL,
   isServer = typeof window === "undefined";
@@ -45,7 +46,7 @@ api.interceptors.request.use(
     config.headers = config.headers || {};
     config.headers["x-sign"] = sign(config.params);
     config.headers["x-channel"] = "WEB";
-    config.headers["x-version"] = version;
+    config.headers["x-version"] = pkgInfo.version;
 
     if (isServer) {
       const { cookies } = await import("next/headers"),
@@ -80,7 +81,21 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   async (response) => {
     if (![200, 201].includes(response.status)) {
-      // todo: add 401
+      if (response.status === 401) {
+        Cookies.remove(cacheTokenKey);
+        if (!isServer) {
+          const locale = document.cookie.replace(
+            new RegExp(
+              `(?:(?:^|.*;\\s*)${cacheLngKey}\\s*=\\s*([^;]*).*$)|^.*$`,
+            ),
+            "$1",
+          );
+
+          const lang = locale || fallbackLng;
+          const loginUrl = `${window.location.origin}/${lang}/login?r=${encodeURIComponent(window.location.href)}`;
+          window.location.replace(loginUrl);
+        }
+      }
       throw response;
     }
     return response.data;
