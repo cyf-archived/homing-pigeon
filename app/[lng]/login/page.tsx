@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import EmailValidator from "email-validator";
 import Cookies from "js-cookie";
 import { Github, Google, LoadingDots } from "@/components/shared/icons";
@@ -16,7 +16,6 @@ export default function Login({
     lng: string;
   };
 }) {
-  const router = useRouter();
   const search = useSearchParams();
   const redirectUrl = search.get("r");
   const [checked, setChecked] = useState(false);
@@ -67,7 +66,6 @@ export default function Login({
       })
       .then((res: any) => {
         setLoading(false);
-        console.log(redirectUrl);
         if (res?.code === 0) {
           Cookies.set(cacheTokenKey, res?.data?.access_token);
           redirectUrl && window.location.replace(redirectUrl);
