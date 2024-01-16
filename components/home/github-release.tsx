@@ -4,7 +4,7 @@ import Balancer from "react-wrap-balancer";
 import { Android, AppStore, GooglePlay } from "@/components/shared/icons";
 import GitHubPkg from "@/components/home/github-pkg";
 import { platforms } from "@/constants";
-import { latestRelease } from "@/request";
+import { getLatestRelease } from "@/request";
 import { useTranslation } from "@/i18n/client";
 import { LngProps } from "@/i18next-lng";
 import { Asset, Release } from "@/types/github";
@@ -45,7 +45,7 @@ export default function GithubRelease({ lng }: LngProps) {
 
   const loadData = () => {
     setLoading(true);
-    latestRelease()
+    getLatestRelease()
       .then((res) => {
         setLoading(false);
         if (res?.code === 0) {
@@ -125,6 +125,12 @@ export default function GithubRelease({ lng }: LngProps) {
             >
               {data?.tag_name}
             </span>
+            <Link
+              href={`/${lng}/releases`}
+              className="ml-2 text-sm text-gray-500 hover:underline dark:text-gray-400"
+            >
+              More releases
+            </Link>
           </Balancer>
         </p>
       )}

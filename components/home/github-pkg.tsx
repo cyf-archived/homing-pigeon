@@ -9,16 +9,18 @@ export default function GitHubPkg(
   props: LngProps & {
     assets: Asset[];
     disabled: boolean;
+    wrapped?: boolean;
     children: React.ReactNode;
   },
 ) {
+  const { lng, assets, disabled, wrapped = true, children } = props;
   const [openPopover, setOpenPopover] = useState(false);
 
   return (
     <Popover
       content={
         <div className="w-full min-w-[14rem] rounded-md bg-white p-2 dark:bg-black">
-          {props.assets.map((asset) => {
+          {assets.map((asset) => {
             return (
               <Link
                 key={asset.id}
@@ -35,14 +37,18 @@ export default function GitHubPkg(
       openPopover={openPopover}
       setOpenPopover={setOpenPopover}
     >
-      <button
-        onClick={() => setOpenPopover(!openPopover)}
-        className="flex items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:enabled:border-gray-800 disabled:cursor-not-allowed dark:bg-black dark:text-white/80 max-md:mx-10"
-        disabled={props.disabled}
-        rel="noopener noreferrer"
-      >
-        {props.children}
-      </button>
+      {!wrapped ? (
+        children
+      ) : (
+        <button
+          onClick={() => setOpenPopover(!openPopover)}
+          className="flex items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:enabled:border-gray-800 disabled:cursor-not-allowed dark:bg-black dark:text-white/80 max-md:mx-10"
+          disabled={disabled}
+          rel="noopener noreferrer"
+        >
+          {children}
+        </button>
+      )}
     </Popover>
   );
 }
