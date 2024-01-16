@@ -4,6 +4,7 @@ import { isPlainObject, isEmpty } from "lodash";
 import { fallbackLng } from "@/i18n/settings";
 import { cacheTokenKey, cacheLngKey } from "@/constants";
 import { encryptSensitiveInfo, sign } from "@/utils";
+import { version } from "../package.json";
 
 const baseURL = process.env.API_BASE_URL,
   isServer = typeof window === "undefined";
@@ -44,6 +45,7 @@ api.interceptors.request.use(
     config.headers = config.headers || {};
     config.headers["x-sign"] = sign(config.params);
     config.headers["x-channel"] = "WEB";
+    config.headers["x-version"] = version;
 
     if (isServer) {
       const { cookies } = await import("next/headers"),
