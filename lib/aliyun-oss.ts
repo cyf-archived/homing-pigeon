@@ -1,11 +1,11 @@
 import OSS from "ali-oss";
 
 declare global {
-  var client: OSS | undefined;
+  var oss: OSS | undefined;
 }
 
-const client =
-  global.client ||
+const oss =
+  global.oss ||
   new OSS({
     region: process.env.ALIYUN_OSS_REGION, // 示例：'oss-cn-hangzhou'，填写Bucket所在地域。
     accessKeyId: process.env.ALIYUN_OSS_ACCESS_KEY_ID, // 确保已设置环境变量OSS_ACCESS_KEY_ID。
@@ -16,6 +16,6 @@ const client =
     endpoint: process.env.ALIYUN_OSS_ENDPOINT,
   });
 
-if (process.env.NODE_ENV === "development") global.client = client;
+if (process.env.NODE_ENV === "development") global.oss = oss;
 
-export default client;
+export default oss;
