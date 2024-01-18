@@ -14,11 +14,16 @@ import Footer from "@/components/layout/footer";
 import { basePath } from "@/constants";
 import { sfPro, inter } from "./fonts";
 import Particles from "./particles";
-import { Providers } from "./providers";
+import ReduxProvider from "./redux-provider";
+import ThemeProvider from "./theme-provider";
 
 const Header = dynamic(() => import("@/components/layout/header"), {
   ssr: false,
 });
+
+// const ReduxProvider = dynamic(() => import("./redux-provider"), {
+//   ssr: false,
+// });
 
 export async function generateMetadata({
   params,
@@ -60,19 +65,21 @@ export default async function RootLayout({
         )}
       >
         <NextTopLoader height={1} />
-        <Providers>
-          <Particles />
-          <Header lng={params.lng} />
-          <main
-            id="main"
-            className="flex w-full flex-1 flex-col items-center justify-center pt-32"
-          >
-            {children}
-            <GoogleAnalytics />
-          </main>
-          <Footer lng={params.lng} />
-          {/*<CookieBanner lng={params.lng} />*/}
-        </Providers>
+        <ReduxProvider>
+          <ThemeProvider>
+            <Particles />
+            <Header lng={params.lng} />
+            <main
+              id="main"
+              className="flex w-full flex-1 flex-col items-center justify-center pt-32"
+            >
+              {children}
+              <GoogleAnalytics />
+            </main>
+            <Footer lng={params.lng} />
+            {/*<CookieBanner lng={params.lng} />*/}
+          </ThemeProvider>
+        </ReduxProvider>
         <ScrollToTop
           smooth
           component={

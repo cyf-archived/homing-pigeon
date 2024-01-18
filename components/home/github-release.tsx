@@ -91,7 +91,7 @@ export default function GithubRelease({ lng }: LngProps) {
               </p>
             </GitHubPkg>
             <Link
-              className="flex items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800 dark:bg-black dark:text-white/80 max-md:mx-10"
+              className="flex items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800 dark:bg-black dark:text-white/80 max-md:mx-0"
               href=""
             >
               <GooglePlay className="h-7 w-7" />
@@ -100,7 +100,7 @@ export default function GithubRelease({ lng }: LngProps) {
               </p>
             </Link>
             <Link
-              className="flex items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800 dark:bg-black dark:text-white/80 max-md:mx-10"
+              className="flex items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800 dark:bg-black dark:text-white/80 max-md:mx-0"
               href=""
             >
               <AppStore className="h-7 w-7" />
