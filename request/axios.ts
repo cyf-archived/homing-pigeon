@@ -3,7 +3,7 @@ import { v4 as uuidV4 } from "uuid";
 import { isPlainObject, isEmpty } from "lodash";
 import Cookies from "js-cookie";
 import { fallbackLng } from "@/i18n/settings";
-import { cacheTokenKey, cacheLngKey } from "@/constants";
+import { host, basePath, cacheTokenKey, cacheLngKey } from "@/constants";
 import { encryptSensitiveInfo, sign } from "@/utils";
 import pkgInfo from "../package.json";
 
@@ -81,26 +81,39 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   async (response) => {
     if (![200, 201].includes(response.status)) {
-      if (response.status === 401) {
-        Cookies.remove(cacheTokenKey);
-        if (!isServer) {
-          const locale = document.cookie.replace(
-            new RegExp(
-              `(?:(?:^|.*;\\s*)${cacheLngKey}\\s*=\\s*([^;]*).*$)|^.*$`,
-            ),
-            "$1",
-          );
-
-          const lang = locale || fallbackLng;
-          const loginUrl = `${window.location.origin}/${lang}/login?r=${encodeURIComponent(window.location.href)}`;
-          window.location.replace(loginUrl);
-        }
-      }
       throw response;
     }
     return response.data;
   },
-  (error) => Promise.reject(error),
+  async (error) => {
+    const { response, request, code } = error;
+    const { status } = response || {};
+    if (status === 401) {
+      Cookies.remove(cacheTokenKey);
+      if (isServer) {
+        const { cookies } = await import("next/headers"),
+          locale = cookies().get(cacheLngKey)?.value || fallbackLng;
+        const { useRouter, usePathname } = await import("next/navigation"),
+          router = useRouter(),
+          path = usePathname();
+        const domain = `${host}${basePath}/${locale}`;
+        const loginUrl = `${domain}/login?r=${encodeURIComponent(`${domain}${path}`)}`;
+        router.replace(loginUrl);
+      } else {
+        const locale =
+          document.cookie.replace(
+            new RegExp(
+              `(?:(?:^|.*;\\s*)${cacheLngKey}\\s*=\\s*([^;]*).*$)|^.*$`,
+            ),
+            "$1",
+          ) || fallbackLng;
+
+        const loginUrl = `${host}${basePath}/${locale}/login?r=${encodeURIComponent(window.location.href)}`;
+        window.location.replace(loginUrl);
+      }
+    }
+    return Promise.reject(error);
+  },
 );
 
 export default api;
