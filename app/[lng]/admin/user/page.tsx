@@ -1,8 +1,7 @@
 "use client";
-import Link from "next/link";
 import { useAppSelector, selectUser } from "@/model";
 
-export default function Admin({
+export default function User({
   params,
 }: {
   params: {
@@ -15,14 +14,9 @@ export default function Admin({
     <>
       <div className="min-h-[calc(100vh-8rem)] w-full max-w-screen-xl flex-1 px-5 xl:px-0">
         <div className="w-full">
-          <span>Admin Page</span>
+          <span>User Page</span>
           <br />
-          <Link
-            className="cursor-pointer text-red-400 hover:text-xl"
-            href={`/${params.lng}/admin/user`}
-          >
-            {user?.nickname}
-          </Link>
+          <span>{user?.nickname}</span>
         </div>
       </div>
     </>

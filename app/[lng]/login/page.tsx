@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import EmailValidator from "email-validator";
+// import EmailValidator from "email-validator";
 import Cookies from "js-cookie";
 import { Github, Google, LoadingDots } from "@/components/shared/icons";
 import { basePath, cacheTokenKey } from "@/constants";
@@ -24,16 +24,16 @@ export default function Login({
   const [githubClicked, setGitHubClicked] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const [emailError, setEmailError] = useState<string | null>(null);
+  const [accountError, setAccountError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
-  const emailRuler = (input: string | null) => {
+  const accountRuler = (input: string | null) => {
     if (!input) {
-      return "email must not be empty.";
+      return "account must not be empty.";
     }
-    if (!EmailValidator.validate(input)) {
-      return "email format is incorrect.";
-    }
+    // if (!EmailValidator.validate(input)) {
+    //   return "email format is incorrect.";
+    // }
     return null;
   };
 
@@ -47,21 +47,21 @@ export default function Login({
     return null;
   };
 
-  const login = async (email: string | null, password: string | null) => {
-    const eError = emailRuler(email);
+  const login = async (account: string | null, password: string | null) => {
+    const eError = accountRuler(account);
     const pwdError = passwordRuler(password);
     if (eError || pwdError) {
-      setEmailError(eError);
+      setAccountError(eError);
       setPasswordError(pwdError);
       return;
     }
-    setEmailError(null);
+    setAccountError(null);
     setPasswordError(null);
 
     setLoading(true);
     await authService
       .login({
-        account: email,
+        account,
         password,
       })
       .then((res: any) => {
@@ -111,24 +111,25 @@ export default function Login({
                 return;
               }
               await login(
-                (e.target as any)?.email?.value,
+                (e.target as any)?.account?.value,
                 (e.target as any)?.password?.value,
               );
             }}
           >
-            <label htmlFor="email" className="text-black dark:text-white">
-              Email
+            <label htmlFor="account" className="text-black dark:text-white">
+              Account
             </label>
             <input
               type="text"
-              name="email"
+              name="account"
+              placeholder="please enter you username or email"
               className={`rounded-[8px] bg-white text-black dark:bg-black dark:text-white ${
-                emailError ? "border-red-400 dark:border-red-400" : ""
+                accountError ? "border-red-400 dark:border-red-400" : ""
               }`}
             />
-            {emailError && (
+            {accountError && (
               <span className="!mt-1 text-[12px] text-red-400">
-                {emailError}
+                {accountError}
               </span>
             )}
             <label htmlFor="password" className="text-black dark:text-white">
@@ -137,6 +138,7 @@ export default function Login({
             <input
               type="password"
               name="password"
+              placeholder="please enter you password"
               className={`rounded-[8px] bg-white text-black dark:bg-black dark:text-white ${
                 passwordError ? "border-red-400 dark:border-red-400" : ""
               }`}

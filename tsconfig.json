@@ -16,28 +16,31 @@
     "baseUrl": ".",
     "plugins": [
       {
-        "name": "next"
-      }
+        "name": "next",
+      },
     ],
     "paths": {
       "@/*": ["./*"],
-      "@/components/*": ["components/*"],
-      "@/i18n/*": ["i18n/*"],
-      "@/pages/*": ["pages/*"],
       "@/app/*": ["app/*"],
+      "@/components/*": ["components/*"],
+      "@/constants/*": ["constants/*"],
+      "@/i18n/*": ["i18n/*"],
       "@/lib/*": ["lib/*"],
-      "@/styles/*": ["styles/*"],
-      "@/theme/*": ["theme/*"],
+      "@/model/*": ["model/*"],
+      "@/request/*": ["request/*"],
       "@/schema/*": ["schema/*"],
-      "contentlayer/generated": ["./.contentlayer/generated"]
-    }
+      "@/services/*": ["services/*"],
+      "@/theme/*": ["theme/*"],
+      "@/utils/*": ["utils/*"],
+      "contentlayer/generated": ["./.contentlayer/generated"],
+    },
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    ".contentlayer/generated"
+    ".contentlayer/generated",
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }
