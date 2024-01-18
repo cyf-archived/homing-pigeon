@@ -1,6 +1,6 @@
 "use client";
 import { useCallback } from "react";
-import { MdOutlineInsertDriveFile, MdOutlineVerified } from "react-icons/md";
+import { FaDownload } from "react-icons/fa6";
 import GitHubPkg from "@/components/home/github-pkg";
 import { Release } from "@/types/github";
 import { LngProps } from "@/i18next-lng";
@@ -11,13 +11,25 @@ export default function Release({
 }: { release: Release } & LngProps) {
   const Badge = useCallback(() => {
     if (!release.prerelease && !release.draft) {
-      return <MdOutlineVerified className="text-xl text-green-400" />;
+      return (
+        <span className="rounded-[2rem] border-[1px] border-[#3fb950] px-[10px] text-[0.75rem] leading-[20px] text-[#3fb950] dark:border-[#3fb950] dark:text-[#3fb950]">
+          Latest
+        </span>
+      );
     }
     if (release.prerelease && !release.draft) {
-      return <MdOutlineVerified className="text-xl text-red-400" />;
+      return (
+        <span className="rounded-[2rem] border-[1px] border-[#9a6700] px-[10px] text-[0.75rem] leading-[20px] text-[#9a6700] dark:border-[#d29922] dark:text-[#d29922]">
+          Pre-release
+        </span>
+      );
     }
     if (!release.prerelease && release.draft) {
-      return <MdOutlineVerified className="text-xl text-gray-400" />;
+      return (
+        <span className="rounded-[2rem] bg-gray-500 px-[10px] text-[0.75rem] leading-[22px] text-white">
+          Draft
+        </span>
+      );
     }
     return null;
   }, [release]);
@@ -30,7 +42,7 @@ export default function Release({
       <div>
         <div className="flex items-center gap-2 pb-2 text-2xl font-semibold leading-6 text-gray-900 dark:text-gray-100">
           <a href={release.html_url} className="hover:underline">
-            {release.tag_name}
+            {release.tag_name || (release.draft ? "Draft" : "")}
           </a>
           <Badge />
         </div>
@@ -65,17 +77,12 @@ export default function Release({
           disabled={false}
           wrapped={false}
         >
-          <div className="flex w-16 cursor-pointer gap-x-2.5">
+          <div className="flex w-16 cursor-pointer gap-x-2.5 text-gray-500 hover:text-green-400 dark:text-gray-400 dark:hover:text-green-300">
             <dt>
               <span className="sr-only">Total assets</span>
-              <MdOutlineInsertDriveFile
-                className="h-6 w-6 text-gray-400"
-                aria-hidden="true"
-              />
+              <FaDownload className="h-5 w-5" aria-hidden="true" />
             </dt>
-            <dd className="text-sm leading-6 text-gray-900 dark:text-gray-500">
-              {release?.assets?.length}
-            </dd>
+            <dd className="text-sm leading-6">{release?.assets?.length}</dd>
           </div>
         </GitHubPkg>
       </dl>
