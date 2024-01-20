@@ -12,21 +12,21 @@ export default function Release({
   const Badge = useCallback(() => {
     if (!release.prerelease && !release.draft) {
       return (
-        <span className="rounded-[2rem] border-[1px] border-[#3fb950] px-[10px] text-[0.75rem] leading-[20px] text-[#3fb950] dark:border-[#3fb950] dark:text-[#3fb950]">
+        <span className="h-[22px] max-w-[91px] rounded-[2rem] border-[1px] border-[#3fb950] px-[10px] text-[0.75rem] leading-[20px] text-[#3fb950] dark:border-[#3fb950] dark:text-[#3fb950]">
           Latest
         </span>
       );
     }
     if (release.prerelease && !release.draft) {
       return (
-        <span className="rounded-[2rem] border-[1px] border-[#9a6700] px-[10px] text-[0.75rem] leading-[20px] text-[#9a6700] dark:border-[#d29922] dark:text-[#d29922]">
+        <span className="h-[22px] max-w-[91px] rounded-[2rem] border-[1px] border-[#9a6700] px-[10px] text-[0.75rem] leading-[20px] text-[#9a6700] dark:border-[#d29922] dark:text-[#d29922]">
           Pre-release
         </span>
       );
     }
     if (!release.prerelease && release.draft) {
       return (
-        <span className="rounded-[2rem] bg-gray-500 px-[10px] text-[0.75rem] leading-[22px] text-white">
+        <span className="h-[22px] max-w-[91px] rounded-[2rem] bg-gray-500 px-[10px] text-[0.75rem] leading-[22px] text-white">
           Draft
         </span>
       );
@@ -41,7 +41,10 @@ export default function Release({
     >
       <div>
         <div className="flex items-center gap-2 pb-2 text-2xl font-semibold leading-6 text-gray-900 dark:text-gray-100">
-          <a href={release.html_url} className="hover:underline">
+          <a
+            href={release.html_url}
+            className="hover:underline max-md:max-w-[calc(100%-91px-0.5rem)]"
+          >
             {release.tag_name || (release.draft ? "Draft" : "")}
           </a>
           <Badge />
@@ -77,7 +80,7 @@ export default function Release({
           disabled={false}
           wrapped={false}
         >
-          <div className="flex w-16 cursor-pointer gap-x-2.5 text-gray-500 hover:text-green-400 dark:text-gray-400 dark:hover:text-green-300">
+          <div className="flex cursor-pointer gap-x-2.5 text-gray-500 hover:text-green-400 dark:text-gray-400 dark:hover:text-green-300">
             <dt>
               <span className="sr-only">Total assets</span>
               <FaDownload className="h-5 w-5" aria-hidden="true" />
