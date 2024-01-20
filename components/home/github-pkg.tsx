@@ -38,7 +38,7 @@ export default function GitHubPkg(
       setOpenPopover={setOpenPopover}
     >
       {!wrapped ? (
-        children
+        <div onClick={() => setOpenPopover(!openPopover)}>{children}</div>
       ) : (
         <button
           onClick={() => setOpenPopover(!openPopover)}
