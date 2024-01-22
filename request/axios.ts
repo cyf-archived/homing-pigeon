@@ -15,7 +15,8 @@ const api = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true,
+  // 服务端设置Access-Control-Allow-Credentials后, 前端无需设置
+  // withCredentials: true,
 });
 
 api.interceptors.request.use(
