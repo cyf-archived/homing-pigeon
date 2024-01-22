@@ -3,7 +3,7 @@ import { Release } from "@/types/github";
 const headers = { "Content-Type": "application/json" };
 
 export async function getLatestRelease() {
-  const resp = await fetch(`${basePath}/api/releases/github/latest/`, {
+  const resp = await fetch(`${basePath}/backend/releases/github/latest/`, {
     method: "GET",
     headers,
     // https://nextjs.org/docs/app/building-your-application/caching
@@ -26,7 +26,7 @@ export async function getReleases(
   timestamp: number;
 } | null> {
   const resp = await fetch(
-    `${basePath}/api/releases/github/list/?page=${page}&page_size=${page_size}`,
+    `${basePath}/backend/releases/github/list/?page=${page}&page_size=${page_size}`,
     {
       method: "GET",
       headers,
@@ -42,7 +42,7 @@ export async function getReleases(
 }
 
 export async function latestTop10Release() {
-  const resp = await fetch(`${basePath}/api/releases/oss/list/`, {
+  const resp = await fetch(`${basePath}/backend/releases/oss/list/`, {
     method: "GET",
     headers,
     // https://nextjs.org/docs/app/building-your-application/caching
@@ -60,7 +60,7 @@ export async function getReleaseInfo(prefix: string) {
     prefix: encodeURIComponent(prefix),
   };
   const resp = await fetch(
-    `${basePath}/api/releases/oss/get/?${new URLSearchParams(params).toString()}`,
+    `${basePath}/backend/releases/oss/get/?${new URLSearchParams(params).toString()}`,
     {
       method: "GET",
       headers,
