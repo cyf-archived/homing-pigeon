@@ -14,7 +14,7 @@
     "@octokit/rest": "^20.0.2",
     "@radix-ui/react-popover": "^1.0.7",
     "@radix-ui/react-tooltip": "^1.0.7",
-    "@reduxjs/toolkit": "^2.0.1",
+    "@reduxjs/toolkit": "^2.1.0",
     "accept-language": "^3.0.18",
     "ali-oss": "^6.19.0",
     "axios": "^1.6.5",
