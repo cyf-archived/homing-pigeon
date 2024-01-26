@@ -185,8 +185,8 @@ devDependencies:
     specifier: 18.2.18
     version: 18.2.18
   '@types/redux-logger':
-    specifier: ^3.0.12
-    version: 3.0.12
+    specifier: ^3.0.13
+    version: 3.0.13
   '@types/uuid':
     specifier: ^9.0.8
     version: 9.0.8
@@ -2123,10 +2123,10 @@ packages:
       '@types/scheduler': 0.16.5
       csstype: 3.1.2
 
-  /@types/redux-logger@3.0.12:
-    resolution: {integrity: sha512-5vAlwokZi/Unb1eGoZfVVzIBTPNDflwXiDzPLT1SynP6hdJfsOEf+w6ZOySOyboLWciCRYeE5DGYUnwVCq+Uyg==}
+  /@types/redux-logger@3.0.13:
+    resolution: {integrity: sha512-jylqZXQfMxahkuPcO8J12AKSSCQngdEWQrw7UiLUJzMBcv1r4Qg77P6mjGLjM27e5gFQDPD8vwUMJ9AyVxFSsg==}
     dependencies:
-      redux: 4.2.1
+      redux: 5.0.1
     dev: true
 
   /@types/resolve@1.20.4:
@@ -6728,15 +6728,8 @@ packages:
       redux: 5.0.1
     dev: false
 
-  /redux@4.2.1:
-    resolution: {integrity: sha512-LAUYz4lc+Do8/g7aeRa8JkyDErK6ekstQaqWQrNRW//MY1TvCEpMtpTWvlQ+FPbWCx+Xixu/6SHt5N0HR+SB4w==}
-    dependencies:
-      '@babel/runtime': 7.23.2
-    dev: true
-
   /redux@5.0.1:
     resolution: {integrity: sha512-M9/ELqF6fy8FwmkpnF0S3YKOqMyoWJ4+CS5Efg2ct3oY9daQvd/Pc71FpGZsVsbl3Cpb+IIcjBDUnnyBdQbq4w==}
-    dev: false
 
   /reflect.getprototypeof@1.0.4:
     resolution: {integrity: sha512-ECkTw8TmJwW60lOTR+ZkODISW6RQ8+2CL3COqtiJKLd6MmB45hN51HprHFziKLGkAuTGQhBb91V8cy+KHlaCjw==}
