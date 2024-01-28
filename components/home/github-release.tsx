@@ -111,29 +111,31 @@ export default function GithubRelease({ lng }: LngProps) {
           </div>
         </div>
       </div>
-      {data?.tag_name && (
-        <p
-          className="mt-4 animate-fade-up text-center text-sm opacity-0"
-          style={{ animationDelay: "0.25s", animationFillMode: "forwards" }}
-        >
-          <Balancer>
-            {t("latest")}:{" "}
-            <span
-              className="text-red-400"
-              // href={`https://github.com/cyf/homing-pigeon/releases/tag/${data?.tag_name}`}
-              // target="_blank"
-            >
-              {data?.tag_name}
-            </span>
-            <Link
-              href={`/${lng}/releases`}
-              className="ml-2 text-sm text-gray-500 hover:underline dark:text-gray-400"
-            >
-              More releases
-            </Link>
-          </Balancer>
-        </p>
-      )}
+      <p
+        className="mt-4 animate-fade-up text-center text-sm opacity-0"
+        style={{ animationDelay: "0.25s", animationFillMode: "forwards" }}
+      >
+        <Balancer>
+          {data?.tag_name && (
+            <>
+              {t("latest")}:{" "}
+              <span
+                className="text-red-400"
+                // href={`https://github.com/cyf/homing-pigeon/releases/tag/${data?.tag_name}`}
+                // target="_blank"
+              >
+                {data?.tag_name}
+              </span>
+            </>
+          )}
+          <Link
+            href={`/${lng}/releases`}
+            className="ml-2 text-sm text-gray-500 hover:underline dark:text-gray-400"
+          >
+            More releases
+          </Link>
+        </Balancer>
+      </p>
     </>
   );
 }
