@@ -1,4 +1,4 @@
-import { basePath } from "@/constants";
+import { basePath, pageSize } from "@/constants";
 import { Release } from "@/types/github";
 const headers = { "Content-Type": "application/json" };
 
@@ -18,7 +18,7 @@ export async function getLatestRelease() {
 
 export async function getReleases(
   page: number,
-  page_size: number = 5,
+  page_size: number = pageSize,
 ): Promise<{
   code: number;
   data?: Release[];

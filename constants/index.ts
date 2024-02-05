@@ -13,3 +13,4 @@ export const platforms: Record<SystemOS, string[]> = {
   ios: [".ipa"],
   android: [".apk", ".aab"],
 };
+export const pageSize: number = 15;
