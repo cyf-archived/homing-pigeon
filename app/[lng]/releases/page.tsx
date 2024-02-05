@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
 import ReleaseComp from "@/components/home/release";
+import { useTranslation } from "@/i18n/client";
+import { pageSize } from "@/constants";
 import { getReleases } from "@/request";
 import type { Release } from "@/types/github";
 
@@ -11,6 +13,8 @@ export default function Releases({
     lng: string;
   };
 }) {
+  const { t } = useTranslation(params.lng, "common");
+
   const [loading, setLoading] = useState<boolean>(false);
   const [releases, setReleases] = useState<Release[]>([]);
   const [page, setPage] = useState<number>(1);
@@ -61,14 +65,14 @@ export default function Releases({
             <ReleaseComp key={release.id} lng={params.lng} release={release} />
           ))}
         </ul>
-        <ShowContent isShow={!(releases.length < page * 10)}>
+        <ShowContent isShow={!(releases.length < page * pageSize)}>
           <button
             onClick={() => setPage(page + 1)}
             className="mx-auto flex items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:enabled:border-gray-800 disabled:cursor-not-allowed dark:bg-black dark:text-white/80 max-md:mx-10"
             disabled={loading}
             rel="noopener noreferrer"
           >
-            Load More
+            {t("load-more")}
           </button>
         </ShowContent>
       </div>
