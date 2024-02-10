@@ -90,8 +90,8 @@ dependencies:
     specifier: 18.2.0
     version: 18.2.0
   react-big-calendar:
-    specifier: ^1.9.1
-    version: 1.9.1(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^1.10.0
+    version: 1.10.0(react-dom@18.2.0)(react@18.2.0)
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
@@ -6494,8 +6494,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /react-big-calendar@1.9.1(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-wS6YOeTN7UAYVDHX9lQ2//y+NK7xfgEiZAosp1USY4nf2oU3ooLVv6Voa45aiHWGO8q7UI096Ml5SfxSq91TqQ==}
+  /react-big-calendar@1.10.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-KomwdTg4eAz1bt625zVgy3T/j/E4v/lC5BfSjbOJY6cUc5GQu6yx15ycy4wk+PXMqB4vAuSaSp0LDrV/cvZ6UQ==}
     peerDependencies:
       react: ^16.14.0 || ^17 || ^18
       react-dom: ^16.14.0 || ^17 || ^18
